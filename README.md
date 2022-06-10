@@ -6,10 +6,8 @@
 ## The User Story:
 
 
-
 ## The Wireframes:
- 
-
+![ERD](public/imgs/P2 Wireframe.png)
 
 
 ## The ERD: 
@@ -27,6 +25,7 @@
 - CSS
 - HTML5
 
+
 ## How To Use:
 
 
@@ -39,5 +38,6 @@
 - [] Include a readme file that explains how to use your app and contains a route table for your RESTful routes
 - [] Have semantically clean HTML, CSS, and back-end code
 - [] Be deployed online and accessible to the public
+
 
 ## Stretch goals / ICE BOX:
