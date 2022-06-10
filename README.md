@@ -13,8 +13,7 @@
 
 
 ## The ERD: 
-
-
+![ERD] (public/imgs/ERD.png)
 
 
 ## Route Table:
