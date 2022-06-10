@@ -7,7 +7,7 @@
 
 
 ## The Wireframes:
-![ERD](public/imgs/P2 Wireframe.png)
+![ERD](public/imgs/P2-Wireframe.png)
 
 
 ## The ERD: 
