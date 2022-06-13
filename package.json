@@ -6,7 +6,8 @@
     "method-override": "^3.0.0",
     "mongodb": "^4.7.0",
     "mongoose": "^6.3.6",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.7"
   },
   "scripts": {
     "start": "node server.js",
@@ -24,7 +25,7 @@
     "url": "git+https://github.com/kennybaquol/albumsaurus.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kenny Baquol",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kennybaquol/albumsaurus/issues"
