@@ -1,7 +1,7 @@
 # Albumsaurus
 
 ## Premise: 
-
+Albumsaurus is full stack web app that allows users to discover and learn about different albums in a Netlifx-style UI. By clicking on an album's artwork or title on screen, the SHOW page will display to the user that album's release date, genre, personnel, (and ideally some billboard chart info, i.e. top spot)
 
 ## The User Story:
 
@@ -11,7 +11,7 @@
 
 
 ## The ERD: 
-![ERD](public/imgs/ERD.png)
+![ERD](public/imgs/P2-ERD.png)
 
 
 ## Route Table:
@@ -41,3 +41,7 @@
 
 
 ## Stretch goals / ICE BOX:
+- [] User creation and authorization
+- [] Give users the ability to save their favorite albums for quicker future reference
+- [] Incorporate an API based on scale (Billboard Top 200 for small scale, Wikipedia/Genius/LastFM for larger scale)
+- [] Display how many users have an album saved
