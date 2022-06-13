@@ -2,4 +2,9 @@ body {
     text-align: center;
     background-color: bisque;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0 20%;
+}
+
+p {
+    font-size: large;
 }

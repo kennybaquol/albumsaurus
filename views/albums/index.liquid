@@ -1,7 +1,13 @@
 {% layout "layout.liquid" %} {% block content %}
 <div>
-    <h3>Discover Albums</h3>
+    <h2>Discover Albums</h2>
 
-    <img src="{{ albumData.album.image}}" alt="{{ albumData.album.name }}">
+    <a href="/albums/{{ albumData.album.mbid }}">
+
+    <img src="https://i.ytimg.com/vi/LtVJR-jxoho/mqdefault.jpg" alt="{{ albumData.album.name }}"><br>
+        <h4>{{ albumData.album.name }}</h4>
+    </a>
+    <h5>{{ albumData.album.artist }}</h5>
+
 </div>
 {% endblock %}

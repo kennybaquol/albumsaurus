@@ -32,7 +32,6 @@ router.get("/", (req, res) => {
             console.log(error)
             res.json({error})
         })
-    // res.render('albums/index')
 })
 
 // new route
@@ -42,7 +41,23 @@ router.get('/new', (req, res) => {
 
 // show route
 router.get('/:id', (req, res) => {
-    res.render('albums/show')
+    const id = req.params.id
+    const key = process.env.LAST_FM_API_KEY
+    const requestURL = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${key}&artist=Audioslave&album=Revelations&format=json`
+    fetch(requestURL)
+        .then((apiResponse) => {
+            console.log(apiResponse)
+            return apiResponse.json()
+        })
+        .then((jsonData) => {
+            console.log("here is the album data: ", jsonData)
+            const albumData = jsonData
+            res.render('albums/show', {albumData})
+        })
+        .catch((error) => {
+            console.log(error)
+            res.json({error})
+        })
 })
 
 // edit route

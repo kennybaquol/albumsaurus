@@ -1,5 +1,9 @@
 {% layout "layout.liquid" %} {% block content %}
 <div>
-
+    <h2>{{ albumData.album.name }}</h2>
+    <img src="https://i.ytimg.com/vi/LtVJR-jxoho/mqdefault.jpg" alt="{{ albumData.album.name }}"><br>
+    <h5>{{ albumData.album.tags[] }}</h5>
+    <p>{{ albumData.album.wiki.summary }}</p>
+    
 </div>
 {% endblock %}
