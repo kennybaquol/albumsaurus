@@ -17,7 +17,7 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 ## Route Table:
 | **URL**          | **HTTP Verb**|**Action**|
 |------------------|--------------|----------|
-| /albums/         | GET          | index  
+| /albums/        | GET          | index  
 | /albums/new      | GET          | new       
 | /albums/:id      | GET          | show   
 | /albums/:id/edit | GET          | edit    
