@@ -14,37 +14,37 @@ const router = express.Router();
 /////////////////////////////////////////
 // index route
 router.get("/", (req, res) => {
-    res.render('index')
+    res.render('albums/index')
 })
 
 // new route
 router.get('/new', (req, res) => {
-    res.render('New')
+    res.render('albums/new')
 })
 
 // show route
 router.get('/:id', (req, res) => {
-    res.render('Show')
+    res.render('albums/show')
 })
 
 // edit route
 router.get('/:id/edit', (req, res) => {
-    res.render('Edit')
+    // res.render('albums/show/edit')
 })
 
 // create route
 router.post('/', (req, res) => {
-    res.render('Create')
+    res.redirect('albums')
 })
 
 // update route
 router.put('/:id', (req, res) => {
-    res.render('Update')
+    res.redirect('albums/:id')
 })
 
 // delete route
 router.delete('/:id', (req, res) => {
-    res.render('Delete')
+    res.redirect('albums')
 })
 
 //////////////////////////////////////////
