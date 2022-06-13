@@ -15,7 +15,14 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 
 
 ## Route Table:
-
+|------------------|--------------|----------|
+| /albums/         | GET          | index  
+| /albums/new      | GET          | new       
+| /albums/:id      | GET          | show   
+| /albums/:id/edit | GET          | edit    
+| /albums          | POST         | create      
+| /albums/:id      | PUT          | update    
+| /albums/:id      | DELETE       | destroy  
 
 ## Technologies Used:
 - MongoDB
