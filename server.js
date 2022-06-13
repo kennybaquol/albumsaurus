@@ -6,7 +6,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const path = require("path")
-// const AlbumRouter = require('./controllers/albums')
+const AlbumRouter = require('./controllers/albums')
 const methodOverride = require("method-override");
 
 /////////////////////////////////////////////////
@@ -25,9 +25,9 @@ app.use(express.static("public")) // serve files from public statically
 ////////////////////////////////////////////
 // Routes
 ////////////////////////////////////////////
-// app.use('/albums', AlbumRouter) // send all "/albums" routes to album router
+app.use('/albums', AlbumRouter) // send all "/albums" routes to album router
 app.get("/", (req, res) => {
-  res.send('Server is up')
+  res.render('index')
 });
 
 //////////////////////////////////////////////
