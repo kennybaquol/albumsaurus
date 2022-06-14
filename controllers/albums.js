@@ -15,17 +15,22 @@ const router = express.Router();
 /////////////////////////////////////////
 // index route
 router.get("/", (req, res) => {
-    const requestURL = 'https://api.deezer.com/album/302127'
+    // const requestURL = 'https://api.deezer.com/album/302127'
+    const requestURL = 'https://api.deezer.com/album/302127/tracks'
+    // const requestURL = `https://api.deezer.com/rock/artists?index=3&limit=7`
+    // const requestURL = `https://api.deezer.com/genre/0/artists`
     fetch(requestURL)
         .then((apiResponse) => {
-            console.log(apiResponse)
+            // console.log(apiResponse)
             return apiResponse.json()
         })
         .then((jsonData) => {
-            console.log("here is the album data: ", jsonData)
-            const albumData = jsonData
+            const albumData = jsonData.data
+            console.log("here is the data: ", albumData)
             // res.render('albums', {albumData})
-            res.render('albums', { albumData })
+            res.render('albums', { 
+                album : albumData
+            })
         })
         .catch((error) => {
             console.log(error)

@@ -2,9 +2,23 @@
 <div>
     <h2>Discover Albums</h2>
 
+    {% for track in album %}
+    <h4>Hi</h4>
+    {{ forloop.index }}
+    <a href="/albums/{{ track[forloop.index0].id }}" name="name">
+
+        <img src="{{ track[forloop.index0].picture_small}}" alt="{{ track[forloop.index0].name }}"><br>
+        <h4>{{ track[forloop.index0].name }}</h4>
+    </a>
+    <h5>{{ track[forloop.index0].name }}</h5>
+    {% else %}
+  The collection is empty.
+    {% endfor %}
+
+
     <a href="/albums/{{ albumData.id }}" name="name">
 
-    <img src="{{ albumData.cover_medium }}" alt="{{ albumData.title }}"><br>
+        <img src="{{ albumData.cover_medium }}" alt="{{ albumData.title }}"><br>
         <h4>{{ albumData.title }}</h4>
     </a>
     <h5>{{ albumData.artist.name }}</h5>
