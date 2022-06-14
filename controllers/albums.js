@@ -92,7 +92,7 @@ router.get("/", (req, res) => {
                     res.render('albums', {
                         data: albumData,
                         artistName,
-                        username : req.session.username
+                        username: req.session.username
                     })
                 })
                 .catch((error) => {
@@ -121,28 +121,35 @@ router.get('/:id', (req, res) => {
             return apiResponse.json()
         })
         .then((jsonData) => {
-            console.log("here is the album data: ", jsonData)
-            const albumData = jsonData
+            // console.log("here is the album data: ", jsonData)
+            const temp = jsonData
             const key = process.env.LAST_FM_API_KEY
-            const artist = albumData.artist.name
-            const title = albumData.title
+            const artist = temp.artist.name
+            const title = temp.title
             const requestURL2 = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${key}&artist=${artist}&album=${title}&format=json`
-            fetch(requestURL2)
-                .then((apiResponse) => {
-                    // console.log(apiResponse)
-                    return apiResponse.json()
-                })
-                .then((lfmData) => {
-                    // const albumData = jsonData
-                    res.render('albums/show', {
-                        albumData,
-                        summary: lfmData.album.wiki.summary
+            const albumData = { temp }
+            console.log(albumData)
+            if (requestURL) {
+                fetch(requestURL2)
+                    .then((apiResponse) => {
+                        // console.log(apiResponse)
+                        return apiResponse.json()
                     })
-                })
-                .catch((error) => {
-                    console.log(error)
-                    res.json({ error })
-                })
+                    .then((lfmData) => {
+                        // const albumData = jsonData
+                        res.render('albums/show', {
+                            albumData : albumData.temp
+                            // summary: lfmData.album.wiki.summary
+                        })
+                    })
+                    .catch((error) => {
+                        console.log('lelelele')
+                        res.json({ error })
+                    })
+            }
+            else {
+                res.render('albums/show')
+            }
         })
         .catch((error) => {
             console.log(error)

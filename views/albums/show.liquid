@@ -2,7 +2,9 @@
 <div>
     <h2>{{ albumData.title }}</h2>
     <img src="{{ albumData.cover_big }}" alt="{{ albumData.title }}"><br>
+    {% if summary %}
     <p>{{ summary }}</p>
+    {% endif %}
     
 </div>
 {% endblock %}
