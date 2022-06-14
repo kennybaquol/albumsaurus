@@ -2,24 +2,18 @@
 <div>
     <h2>Discover Albums</h2>
 
-    {% for album in data limit: 5 %}
-    <a href="/albums/{{ album.id }}" name="name">
+    <section>
+        {% for album in data limit: 3 %}
+        <a href="/albums/{{ album.id }}" name="name" class="item">
 
-        <img src="{{ album.cover_medium}}" alt="{{ album.title }}"><br>
-        <h4>{{ album.title }}</h4>
-    </a>
-    <h5>{{ artist }}</h5>
-    {% else %}
-  The collection is empty.
-    {% endfor %}
-
-
-    <a href="/albums/{{ albumData.id }}" name="name">
-
-        <img src="{{ albumData.cover_medium }}" alt="{{ albumData.title }}"><br>
-        <h4>{{ albumData.title }}</h4>
-    </a>
-    <h5>{{ albumData.artist.name }}</h5>
+            <img src="{{ album.cover_medium}}" alt="{{ album.title }}"><br>
+            <!-- <h4>{{ album.title }}</h4> -->
+        </a>
+        {% else %}
+        The collection is empty.
+        {% endfor %}
+    </section>
+    <h5>{{ artistName }}</h5>
 
 </div>
 {% endblock %}

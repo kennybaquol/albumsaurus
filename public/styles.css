@@ -2,9 +2,18 @@ body {
     text-align: center;
     background-color: bisque;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    margin: 0 20%;
+    margin: 0 10%;
 }
 
 p {
     font-size: large;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+}
+
+.item {
+    margin: 2%;
 }

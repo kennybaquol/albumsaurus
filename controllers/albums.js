@@ -16,7 +16,6 @@ const router = express.Router();
 // index route
 router.get("/", (req, res) => {
     const artistURL = `https://api.deezer.com/genre/113/artists`
-    let artist = ''
     fetch(artistURL)
         .then((apiResponse) => {
             // console.log(apiResponse)
@@ -25,9 +24,10 @@ router.get("/", (req, res) => {
         .then((jsonData) => {
             const artistData = jsonData.data
             console.log("here is the data: ", artistData)
-            artist = artistData[11].id
-            console.log(artist)
-            const requestURL = `https://api.deezer.com/artist/${artist}/albums`
+            const artistId = artistData[11].id
+            const artistName = artistData[11].name
+            console.log(artistId)
+            const requestURL = `https://api.deezer.com/artist/${artistId}/albums`
             // const requestURL = 'https://api.deezer.com/album/302127/tracks'
             // const requestURL = `https://api.deezer.com/rock/artists?index=3&limit=7`
             // const requestURL = `https://api.deezer.com/genre/0/artists`
@@ -42,7 +42,7 @@ router.get("/", (req, res) => {
                     // res.render('albums', {albumData})
                     res.render('albums', {
                         data: albumData,
-                        artist
+                        artistName
                     })
                 })
                 .catch((error) => {
