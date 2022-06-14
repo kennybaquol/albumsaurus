@@ -1,7 +1,7 @@
 {% layout "layout.liquid" %} {% block content %}
 <div>
-    <h2>{{ albumData.title }}</h2>
-    <img src="{{ albumData.cover_big }}" alt="{{ albumData.title }}"><br>
+    <h2>{{ album.title }}</h2>
+    <img src="{{ album.cover_big }}" alt="{{ album.title }}"><br>
     {% if summary %}
     <p>{{ summary }}</p>
     {% endif %}
