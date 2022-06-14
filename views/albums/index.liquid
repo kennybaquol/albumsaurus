@@ -2,12 +2,12 @@
 <div>
     <h2>Discover Albums</h2>
 
-    <a href="/albums/{{ albumData.album.mbid }}">
+    <a href="/albums/{{ albumData.id }}" name="name">
 
-    <img src="https://i.ytimg.com/vi/LtVJR-jxoho/mqdefault.jpg" alt="{{ albumData.album.name }}"><br>
-        <h4>{{ albumData.album.name }}</h4>
+    <img src="{{ albumData.cover_medium }}" alt="{{ albumData.title }}"><br>
+        <h4>{{ albumData.title }}</h4>
     </a>
-    <h5>{{ albumData.album.artist }}</h5>
+    <h5>{{ albumData.artist.name }}</h5>
 
 </div>
 {% endblock %}
