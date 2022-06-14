@@ -17,7 +17,7 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 ## Route Table:
 | **URL**          | **HTTP Verb**|**Action**|
 |------------------|--------------|----------|
-| /albums/        | GET          | index  
+| /albums          | GET          | index  
 | /albums/new      | GET          | new       
 | /albums/:id      | GET          | show   
 | /albums/:id/edit | GET          | edit    
@@ -26,6 +26,8 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 | /albums/:id      | DELETE       | destroy  
 
 ## Technologies Used:
+- Deezer API
+- Last FM API
 - MongoDB
 - Express
 - Node
@@ -39,7 +41,7 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 
 ## MVP Requirements:
 - [] Have at least 2 models (more if they make sense) that represents the main functional idea for your app.
-- [] Incorporate at least one API. List of examples here: (Public API List)[https://github.com/public-apis/public-apis].
+- [x] Incorporate at least one API. List of examples here: (Public API List)[https://github.com/public-apis/public-apis].
 - [] Have complete RESTful routes for at least one of your resources with GET, POST, PUT, and DELETE
 - [] Utilize an ODM to create a database table structure and interact with your MongoDb-stored data
 - [] Include a readme file that explains how to use your app and contains a route table for your RESTful routes
