@@ -10,6 +10,18 @@ const fetch = require('node-fetch')
 /////////////////////////////////////////
 const router = express.Router();
 
+////////////////////////////////////////
+// Router Middleware
+////////////////////////////////////////
+// Authorization Middleware
+router.use((req, res, next) => {
+    if (req.session.loggedIn) {
+        next();
+    } else {
+        res.redirect("/user/login");
+    }
+});
+
 /////////////////////////////////////////
 // Routes
 /////////////////////////////////////////
@@ -79,7 +91,8 @@ router.get("/", (req, res) => {
                     // res.render('albums', {albumData})
                     res.render('albums', {
                         data: albumData,
-                        artistName
+                        artistName,
+                        username : req.session.username
                     })
                 })
                 .catch((error) => {
