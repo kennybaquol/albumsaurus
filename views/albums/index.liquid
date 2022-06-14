@@ -2,6 +2,7 @@
 <div>
     <h2>Discover Albums</h2>
 
+    <!-- Hello, {{ username }}! -->
     <section>
         {% for album in data limit: 3 %}
         <a href="/albums/{{ album.id }}" name="name" class="item">
