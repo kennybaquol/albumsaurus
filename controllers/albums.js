@@ -23,14 +23,11 @@ router.get("/", (req, res) => {
         })
         .then((jsonData) => {
             const artistData = jsonData.data
-            console.log("here is the data: ", artistData)
-            const artistId = artistData[11].id
-            const artistName = artistData[11].name
-            console.log(artistId)
+            // console.log("here is the data: ", artistData)
+            const currentArtstIndex = Math.floor(Math.random() * artistData.length)
+            const artistId = artistData[currentArtstIndex].id
+            const artistName = artistData[currentArtstIndex].name
             const requestURL = `https://api.deezer.com/artist/${artistId}/albums`
-            // const requestURL = 'https://api.deezer.com/album/302127/tracks'
-            // const requestURL = `https://api.deezer.com/rock/artists?index=3&limit=7`
-            // const requestURL = `https://api.deezer.com/genre/0/artists`
             fetch(requestURL)
                 .then((apiResponse) => {
                     // console.log(apiResponse)
@@ -38,7 +35,21 @@ router.get("/", (req, res) => {
                 })
                 .then((jsonData) => {
                     const albumData = jsonData.data
-                    console.log("here is the data: ", albumData)
+                    let temp = []
+                    let currentAlbumIndex
+                    //until there are 3 values in temp array
+                    while (temp.length < 3) {
+                        // if the current album is an "album"
+                        currentAlbumIndex = Math.floor(Math.random()*albumData.length)
+                        console.log('current album index is: ' + currentAlbumIndex)
+                        if (albumData[currentAlbumIndex].record_type === 'album') {
+                            // add it to the temp array
+                            temp.push(albumData[currentAlbumIndex])
+                            console.log(temp)
+                        }
+                    }
+                    console.log(temp.length)
+                    console.log("here is the data: ", albumData[0].record_type)
                     // res.render('albums', {albumData})
                     res.render('albums', {
                         data: albumData,
