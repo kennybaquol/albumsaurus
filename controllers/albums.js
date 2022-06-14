@@ -15,7 +15,7 @@ const router = express.Router();
 /////////////////////////////////////////
 // index route
 router.get("/", (req, res) => {
-    const artistURL = `https://api.deezer.com/genre/113/artists`
+    const artistURL = `https://api.deezer.com/genre/152/artists`
     fetch(artistURL)
         .then((apiResponse) => {
             // console.log(apiResponse)
@@ -64,7 +64,8 @@ router.get("/", (req, res) => {
                         // if the current album is an "album"
                         currentAlbumIndex = Math.floor(Math.random() * jsonData.data.length)
                         console.log('current album index is: ' + currentAlbumIndex)
-                        if (jsonData.data[currentAlbumIndex].record_type === 'album') {
+                        if (jsonData.data[currentAlbumIndex].record_type) {
+                            // === 'album') {
                             // add it to the temp array if it's not already in it
                             if (!temp.includes(jsonData.data[currentAlbumIndex])) {
                                 temp.push(jsonData.data[currentAlbumIndex])

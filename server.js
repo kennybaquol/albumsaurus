@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const path = require("path")
 const AlbumRouter = require('./controllers/albums')
+const UserRouter = require('./controllers/users')
 const methodOverride = require("method-override");
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
@@ -37,6 +38,7 @@ app.use(
 // Routes
 ////////////////////////////////////////////
 app.use('/albums', AlbumRouter) // send all "/albums" routes to album router
+app.use('/users', UserRouter) // send all "/users" routes to user router
 app.get("/", (req, res) => {
   res.render('index')
 });
