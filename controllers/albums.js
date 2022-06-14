@@ -24,9 +24,31 @@ router.get("/", (req, res) => {
         .then((jsonData) => {
             const artistData = jsonData.data
             // console.log("here is the data: ", artistData)
-            const currentArtstIndex = Math.floor(Math.random() * artistData.length)
-            const artistId = artistData[currentArtstIndex].id
-            const artistName = artistData[currentArtstIndex].name
+            // let currentArtistIndex = -1
+            // let currentIndex
+            // let numberOfAlbums
+            // while (currentArtistIndex < 0) {
+            //     numberOfAlbums = 0
+            //     currentIndex = Math.floor(Math.random() * artistData.length)
+            //     console.log('current index being tried is: ' + currentIndex + ', ' + artistData[currentIndex].name)
+            //     for (let i = 0; i < artistData.length; i++) {
+            //         console.log('current number of albums: ' + numberOfAlbums)
+            //         if (artistData[i].record_type === 'album') {
+            //             numberOfAlbums++
+            //             if (numberOfAlbums > 3) {
+            //                 currentArtistIndex = currentIndex
+            //                 break
+            //             }
+            //         }
+            //     }
+            //     // if (true) {
+            //     //     console.log(currentIndex)
+            //     // }
+            // }
+            let currentArtistIndex = Math.floor(Math.random() * artistData.length)
+            const artistId = artistData[currentArtistIndex].id
+            const artistName = artistData[currentArtistIndex].name
+            console.log(artistName)
             const requestURL = `https://api.deezer.com/artist/${artistId}/albums`
             fetch(requestURL)
                 .then((apiResponse) => {
@@ -34,21 +56,24 @@ router.get("/", (req, res) => {
                     return apiResponse.json()
                 })
                 .then((jsonData) => {
-                    const albumData = jsonData.data
+                    // const albumData = jsonData.data
                     let temp = []
                     let currentAlbumIndex
                     //until there are 3 values in temp array
                     while (temp.length < 3) {
                         // if the current album is an "album"
-                        currentAlbumIndex = Math.floor(Math.random()*albumData.length)
+                        currentAlbumIndex = Math.floor(Math.random() * jsonData.data.length)
                         console.log('current album index is: ' + currentAlbumIndex)
-                        if (albumData[currentAlbumIndex].record_type === 'album') {
-                            // add it to the temp array
-                            temp.push(albumData[currentAlbumIndex])
-                            console.log(temp)
+                        if (jsonData.data[currentAlbumIndex].record_type === 'album') {
+                            // add it to the temp array if it's not already in it
+                            if (!temp.includes(jsonData.data[currentAlbumIndex])) {
+                                temp.push(jsonData.data[currentAlbumIndex])
+                                // console.log(temp)
+                            }
                         }
                     }
                     console.log(temp.length)
+                    const albumData = temp
                     console.log("here is the data: ", albumData[0].record_type)
                     // res.render('albums', {albumData})
                     res.render('albums', {
