@@ -90,22 +90,24 @@ router.get("/", (req, res) => {
                     const albumData = temp
                     // console.log("here is the data: ", albumData[0].record_type)
                     // res.render('albums', {albumData})
+                    let favoriteAlbums
                     const currentUsername = req.session.username
                     const currentUser = User.findOne({ name: currentUsername }, (error, user) => {
-                            if (error) {
-                                console.log(error)
-                            }
-                            else {
-                                console.log(user)
-                                // res.redirect('/albums')
-                            }
-                        })
-                    res.render('albums', {
-                        data: albumData,
-                        artistName,
-                        username: req.session.username,
-                        favorite: req.session.favorites
+                        if (error) {
+                            console.log(error)
+                        }
+                        else {
+                            // console.log(user)
+                            favoriteAlbums = user.favorites
+                            res.render('albums', {
+                                data: albumData,
+                                artistName,
+                                username: req.session.username,
+                                favorites: favoriteAlbums
+                            })
+                        }
                     })
+
                 })
                 .catch((error) => {
                     console.log(error)
