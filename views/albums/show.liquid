@@ -7,6 +7,7 @@
     {% endif %}<br>
 
     <form action="/albums/{{ album.id }}/favorite" method="POST">
+        <input type="text" name="title" value="{{ album.title }}">
         <button>Add to My Favorites</button>
     </form>
 

@@ -18,7 +18,9 @@
 
     <h2>My Favorites</h2>
     <section>
-        {% for favorite in favorites limit: 3 %}
+        <!-- {% for favorite in favorites limit: 3 %} -->
+        {{ favorite.title }}
+
         <a href="/albums/{{ favorite.id }}" name="name" class="item">
 
             <img src="{{ favorite.cover_medium}}" alt="{{ favorite.title }}"><br>
@@ -26,7 +28,7 @@
         </a>
         {% else %}
         The collection is empty.
-        {% endfor %}
+        <!-- {% endfor %} -->
     </section><br>
 
     <a href="/users/logout">

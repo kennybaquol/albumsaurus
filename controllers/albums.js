@@ -2,8 +2,9 @@
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express");
-// const Album = require("../models/album");
-const fetch = require('node-fetch')
+const Album = require("../models/album");
+const fetch = require('node-fetch');
+const User = require("../models/user");
 
 /////////////////////////////////////////
 // Create Route
@@ -60,7 +61,7 @@ router.get("/", (req, res) => {
             let currentArtistIndex = Math.floor(Math.random() * artistData.length)
             const artistId = artistData[currentArtistIndex].id
             const artistName = artistData[currentArtistIndex].name
-            console.log(artistName)
+            // console.log(artistName)
             const requestURL = `https://api.deezer.com/artist/${artistId}/albums`
             fetch(requestURL)
                 .then((apiResponse) => {
@@ -75,7 +76,7 @@ router.get("/", (req, res) => {
                     while (temp.length < 3) {
                         // if the current album is an "album"
                         currentAlbumIndex = Math.floor(Math.random() * jsonData.data.length)
-                        console.log('current album index is: ' + currentAlbumIndex)
+                        // console.log('current album index is: ' + currentAlbumIndex)
                         if (jsonData.data[currentAlbumIndex].record_type) {
                             // === 'album') {
                             // add it to the temp array if it's not already in it
@@ -87,13 +88,13 @@ router.get("/", (req, res) => {
                     }
                     console.log(temp.length)
                     const albumData = temp
-                    console.log("here is the data: ", albumData[0].record_type)
+                    // console.log("here is the data: ", albumData[0].record_type)
                     // res.render('albums', {albumData})
                     res.render('albums', {
                         data: albumData,
                         artistName,
                         username: req.session.username,
-                        favorites : req.session.album
+                        favorites: req.session.album
                     })
                 })
                 .catch((error) => {
@@ -122,7 +123,7 @@ router.get('/:id', (req, res) => {
             return apiResponse.json()
         })
         .then((jsonData) => {
-            console.log("here is the album data: ", jsonData)
+            // console.log("here is the album data: ", jsonData)
             const albumData = jsonData
             const key = process.env.LAST_FM_API_KEY
             const artist = albumData.artist.name
@@ -163,8 +164,36 @@ router.get('/:id/edit', (req, res) => {
 
 // Favorite route
 router.post('/:id/favorite', (req, res) => {
+    // const albumsSchema = new Schema({
+    //     id: Number,
+    //     title: String,
+    //     cover_medium: String,
+    //     cover_big: String,
+    //     genre_id: Number,
+    //     artistID: Number,
+    //     artistName: String,
 
-    res.redirect('/albums')
+
+    //     mbid: String,
+    //     releaseDate: Date,
+    //     listeners: Number,
+    //     playCount: Number,
+
+    // });
+    console.log(req.body)
+
+    Album.create({
+        title: req.body.title
+    }, (error, album) => {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            console.log(album)
+            req.session.album = album
+            res.redirect('/albums')
+        }
+    })
 })
 
 // create route
