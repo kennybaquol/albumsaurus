@@ -171,8 +171,25 @@ router.get('/:id', (req, res) => {
 
 // edit route
 router.get('/:id/edit', (req, res) => {
-    const id = req.params.id
-    res.render(`albums/edit`)
+    const albumId = req.params.id
+    User.findOne({ name: req.session.username }, (error, user) => {
+            if (error) {
+                console.log(error)
+            }
+            else {
+                let currentAlbum
+                for (let i = 0; i < user.favorites.length; i++) {
+                    if (user.favorites[i].id == albumId) {
+                        currentAlbum = user.favorites[i]
+                        break
+                    }
+                }
+                console.log(currentAlbum)    
+                res.render(`albums/edit`, {
+                    currentAlbum
+                })
+            }
+        })
 })
 
 // Favorite route
