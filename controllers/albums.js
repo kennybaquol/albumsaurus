@@ -172,7 +172,7 @@ router.get('/:id', (req, res) => {
 // edit route
 router.get('/:id/edit', (req, res) => {
     const id = req.params.id
-    res.render(`albums/${id}/edit`)
+    res.render(`albums/edit`)
 })
 
 // Favorite route
