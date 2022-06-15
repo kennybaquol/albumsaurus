@@ -173,23 +173,23 @@ router.get('/:id', (req, res) => {
 router.get('/:id/edit', (req, res) => {
     const albumId = req.params.id
     User.findOne({ name: req.session.username }, (error, user) => {
-            if (error) {
-                console.log(error)
-            }
-            else {
-                let currentAlbum
-                for (let i = 0; i < user.favorites.length; i++) {
-                    if (user.favorites[i].id == albumId) {
-                        currentAlbum = user.favorites[i]
-                        break
-                    }
+        if (error) {
+            console.log(error)
+        }
+        else {
+            let currentAlbum
+            for (let i = 0; i < user.favorites.length; i++) {
+                if (user.favorites[i].id == albumId) {
+                    currentAlbum = user.favorites[i]
+                    break
                 }
-                console.log(currentAlbum)    
-                res.render(`albums/edit`, {
-                    currentAlbum
-                })
             }
-        })
+            console.log(currentAlbum)
+            res.render(`albums/edit`, {
+                currentAlbum
+            })
+        }
+    })
 })
 
 // Favorite route
@@ -236,16 +236,69 @@ router.post('/', (req, res) => {
 
 // update route
 router.put('/:id', (req, res) => {
-    const id = req.params.id
+    const albumId = req.params.id
     console.log('RAN UPDATE PUT ROUTE')
-    res.redirect(`/albums/${id}/edit`)
-    // res.redirect('/albums')
+    // User.updateOne({ name: req.session.username },
+    //     {
+    //         $pull: {
+    //             favorites: {
+    //                 id: albumId
+    //             }
+    //         },
+    //         $addToSet: {
+    //             favorites: req.body
+    //         }
+    //     }, (error, user) => {
+    //         if (error) {
+    //             console.log(error)
+    //         }
+    //         else {
+    //             console.log("PULLED PULLED PULLED")
+    //             // res.redirect('/albums')
+    //         }
+    //     }
+    // )
+    // then(() => {
+    User.updateOne({ name: req.session.username },
+        {
+            $set: {
+                favorites: { id: albumId },
+                favorites: req.body
+            }
+        }, (error, user) => {
+            if (error) {
+                console.log(error)
+            }
+            else {
+                console.log("PUSHED PUSHED PUSHED")
+                res.redirect('/albums')
+            }
+        }
+    )
+    // })
 })
 
 // delete route
 router.delete('/:id', (req, res) => {
-
-    res.redirect('albums')
+    const albumId = req.params.id
+    console.log('RAN UPDATE PUT ROUTE')
+    User.updateOne({ name: req.session.username },
+        {
+            $pull: {
+                favorites: {
+                    id: albumId
+                }
+            }
+        }, (error, user) => {
+            if (error) {
+                console.log(error)
+            }
+            else {
+                console.log(user.favorites)
+                res.redirect('/albums')
+            }
+        }
+    )
 })
 
 //////////////////////////////////////////
