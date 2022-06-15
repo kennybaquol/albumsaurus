@@ -2,8 +2,24 @@
 <div>
     <h2>{{ currentAlbum.title }}</h2>
     <img src="{{ currentAlbum.cover_big }}" alt="{{ currentAlbum.title }}"><br>
+
+    {% assign summary = " " %}
     {% if currentAlbum.summary %}
-    <p>{{ currentAlbum.summary }}</p>
+    {% assign summary = currentAlbum.summary %}
     {% endif %}<br>
+
+    <!-- <p>{{ summary }}</p> -->
+
+    <form>
+        <input type="text" name="title" value="{{ currentAlbum.title }}" placeholder="Album Title"><br>
+        <input type="text" name="cover_medium" value="{{ currentAlbum.cover_medium }}"
+            placeholder="Album Artwork Link"><br>
+        <input type="text" name="cover_big" value="{{ currentAlbum.cover_big }}"
+            placeholder="Album Artwork Link (Large)"><br>
+        <input type="text" name="genre_id" value="{{ currentAlbum.genre_id }}" placeholder="Album Genre(s)"><br>
+        <input type="text" name="artistName" value="{{ currentAlbum.artistName }}" placeholder="Artist Name"><br>
+        <input type="text" name="summary" value="{{ summary }}" placeholder="Album Summary"><br>
+        <input type="submit" value="Submit Changes">
+    </form>
 </div>
 {% endblock %}

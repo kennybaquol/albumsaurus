@@ -17,3 +17,7 @@ section {
 .item {
     margin: 2%;
 }
+
+.albumInfo {
+    display: none;
+}
