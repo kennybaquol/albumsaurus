@@ -194,11 +194,11 @@ router.get('/:id/edit', (req, res) => {
 
 // Favorite route
 router.post('/:id/favorite', (req, res) => {
-    console.log(req.body)
-    console.log(req.session.username)
-    const currentUser = req.session.username
+    // console.log(req.body)
+    // console.log(req.session.username)
+    // const currentUser = req.session.username
     // console.log(req.session.favorites)
-    User.updateOne({ name: currentUser },
+    User.updateOne({ name: req.session.username },
         {
             $addToSet: {
                 favorites: req.body
@@ -214,25 +214,45 @@ router.post('/:id/favorite', (req, res) => {
             }
         }
     )
-
-    //     Album.create({
-    //         title: req.body.title
-    //     }, (error, album) => {
-    //         if (error) {
-    //             console.log(error)
-    //         }
-    //         else {
-    //             console.log(album)
-    //             req.session.album = album
-    // res.redirect('/albums')
-    //         }
-    //     })
 })
 
 // create route
 router.post('/', (req, res) => {
-    
-    res.redirect('albums')
+    console.log('RAN CREATE POST ROUTE')
+    const albumId = Math.floor(Math.random()*9999999)
+    Album.create({
+        id: albumId,
+        title: req.body.title,
+        cover_medium: req.body.cover_medium,
+        cover_big: req.body.cover_big,
+        genre_id: req.body.genre_id,
+        artistID: req.body.artistID,
+        artistName: req.body.artistName,
+    }, (error, album) => {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            // console.log(album)
+            User.updateOne({ name: req.session.username },
+                {
+                    $addToSet: {
+                        favorites: album
+                    }
+                }, (error, user) => {
+
+                    if (error) {
+                        console.log(error)
+                    }
+                    else {
+                        res.redirect('/albums')
+                    }
+                }
+            )
+        }
+    })
+
+
 })
 
 // update route
