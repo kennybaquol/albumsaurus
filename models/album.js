@@ -11,6 +11,7 @@ const { Schema, model } = mongoose
 
 // make albums schema
 const albumsSchema = new Schema({
+  // _id: ObjectId,
   id: Number,
   title: String,
   cover_medium: String,

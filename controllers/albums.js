@@ -90,11 +90,21 @@ router.get("/", (req, res) => {
                     const albumData = temp
                     // console.log("here is the data: ", albumData[0].record_type)
                     // res.render('albums', {albumData})
+                    const currentUsername = req.session.username
+                    const currentUser = User.findOne({ name: currentUsername }, (error, user) => {
+                            if (error) {
+                                console.log(error)
+                            }
+                            else {
+                                console.log(user)
+                                // res.redirect('/albums')
+                            }
+                        })
                     res.render('albums', {
                         data: albumData,
                         artistName,
                         username: req.session.username,
-                        favorites: req.session.album
+                        favorite: req.session.favorites
                     })
                 })
                 .catch((error) => {
@@ -181,19 +191,38 @@ router.post('/:id/favorite', (req, res) => {
 
     // });
     console.log(req.body)
+    console.log(req.session.username)
+    const currentUser = req.session.username
+    // console.log(req.session.favorites)
+    User.updateOne({ name: currentUser },
+        {
+            $addToSet: {
+                favorites: req.body
+            }
+        }, (error, user) => {
 
-    Album.create({
-        title: req.body.title
-    }, (error, album) => {
-        if (error) {
-            console.log(error)
+            if (error) {
+                console.log(error)
+            }
+            else {
+                // console.log(User.find({ name: req.session.username }))
+                res.redirect('/albums')
+            }
         }
-        else {
-            console.log(album)
-            req.session.album = album
-            res.redirect('/albums')
-        }
-    })
+    )
+
+    //     Album.create({
+    //         title: req.body.title
+    //     }, (error, album) => {
+    //         if (error) {
+    //             console.log(error)
+    //         }
+    //         else {
+    //             console.log(album)
+    //             req.session.album = album
+    // res.redirect('/albums')
+    //         }
+    //     })
 })
 
 // create route

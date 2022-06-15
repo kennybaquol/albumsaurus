@@ -1,6 +1,7 @@
 //////////////////////////////////////////////
 // Import Dependencies
 //////////////////////////////////////////////
+const { ObjectId } = require("mongodb");
 const mongoose = require("./connection");
 // const Album = require("./album");
 
@@ -12,6 +13,7 @@ const { Schema, model } = mongoose;
 
 // Make albumsSchema
 const albumsSchema = new Schema({
+  // _id: ObjectId,
   id: Number,
   title: String,
   cover_medium: String,
@@ -32,7 +34,7 @@ const albumsSchema = new Schema({
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  album: { type: albumsSchema }
+  favorites: [{ type: albumsSchema }]
 });
 
 // make fruit model
