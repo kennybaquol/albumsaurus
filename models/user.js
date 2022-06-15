@@ -21,12 +21,12 @@ const albumsSchema = new Schema({
   genre_id: Number,
   artistID: Number,
   artistName: String,
+  summary: String,
 
-
-  mbid: String,
-  releaseDate: Date,
-  listeners: Number,
-  playCount: Number,
+  // mbid: String,
+  // releaseDate: Date,
+  // listeners: Number,
+  // playCount: Number,
 
 });
 

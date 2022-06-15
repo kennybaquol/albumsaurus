@@ -2,8 +2,8 @@
 <div>
     <h2>{{ currentAlbum.title }}</h2>
     <img src="{{ currentAlbum.cover_big }}" alt="{{ currentAlbum.title }}"><br>
-    {% if summary %}
-    <p>{{ summary }}</p>
+    {% if currentAlbum.summary %}
+    <p>{{ currentAlbum.summary }}</p>
     {% endif %}<br>
 </div>
 {% endblock %}
