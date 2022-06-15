@@ -7,7 +7,13 @@
     {% endif %}<br>
 
     <form action="/albums/{{ album.id }}/favorite" method="POST">
+        <input type="text" name="id" value="{{ album.id }}">
         <input type="text" name="title" value="{{ album.title }}">
+        <input type="text" name="cover_medium" value="{{ album.cover_medium }}">
+        <input type="text" name="cover_big" value="{{ album.cover_big }}">
+        <input type="text" name="genre_id" value="{{ album.genre_id }}">
+        <input type="text" name="artistID" value="{{ album.artist.id }}">
+        <input type="text" name="artistName" value="{{ album.artist.name }}">
         <button>Add to My Favorites</button>
     </form>
 

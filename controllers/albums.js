@@ -135,7 +135,7 @@ router.get('/:id', (req, res) => {
             return apiResponse.json()
         })
         .then((jsonData) => {
-            // console.log("here is the album data: ", jsonData)
+            console.log("here is the album data: ", jsonData)
             const albumData = jsonData
             const key = process.env.LAST_FM_API_KEY
             const artist = albumData.artist.name
@@ -171,27 +171,12 @@ router.get('/:id', (req, res) => {
 
 // edit route
 router.get('/:id/edit', (req, res) => {
-    // res.render('albums/show/edit')
+    const id = req.params.id
+    res.render(`albums/${id}/edit`)
 })
 
 // Favorite route
 router.post('/:id/favorite', (req, res) => {
-    // const albumsSchema = new Schema({
-    //     id: Number,
-    //     title: String,
-    //     cover_medium: String,
-    //     cover_big: String,
-    //     genre_id: Number,
-    //     artistID: Number,
-    //     artistName: String,
-
-
-    //     mbid: String,
-    //     releaseDate: Date,
-    //     listeners: Number,
-    //     playCount: Number,
-
-    // });
     console.log(req.body)
     console.log(req.session.username)
     const currentUser = req.session.username
@@ -239,6 +224,7 @@ router.put('/:id', (req, res) => {
 
 // delete route
 router.delete('/:id', (req, res) => {
+
     res.redirect('albums')
 })
 

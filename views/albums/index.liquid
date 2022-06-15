@@ -22,10 +22,9 @@
         {{ favorite.title }}
         Hi.
 
-        <a href="/albums/{{ favorite.id }}" name="name" class="item">
+        <a href="/albums/{{ favorite.id }}/edit" name="name" class="item">
 
             <img src="{{ favorite.cover_medium}}" alt="{{ favorite.title }}"><br>
-            <!-- <h4>{{ album.title }}</h4> -->
         </a>
         {% else %}
         The collection is empty.
