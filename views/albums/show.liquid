@@ -1,5 +1,9 @@
 {% layout "layout.liquid" %} {% block content %}
 <div>
+    <a href="/albums">
+        <button>Back to Albums</button>
+    </a>
+    
     <h2 name="title">{{ album.title }}</h2>
     <img src="{{ album.cover_big }}" alt="{{ album.title }}"><br>
     {% if summary %}

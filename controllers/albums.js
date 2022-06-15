@@ -236,7 +236,10 @@ router.post('/', (req, res) => {
 
 // update route
 router.put('/:id', (req, res) => {
-    res.redirect('albums/:id')
+    const id = req.params.id
+    console.log('RAN UPDATE PUT ROUTE')
+    res.redirect(`/albums/${id}/edit`)
+    // res.redirect('/albums')
 })
 
 // delete route
