@@ -1,6 +1,7 @@
 {% layout "layout.liquid" %} {% block content %}
 <div>
     <h4>Hello, {{ username }}!</h4>
+
     <h2>Discover Albums</h2>
     <section>
         {% for album in data limit: 3 %}
@@ -14,6 +15,23 @@
         {% endfor %}
     </section>
     <h5>{{ artistName }}</h5>
+
+    <h2>My Favorites</h2>
+    <section>
+        {% for favorite in favorites limit: 3 %}
+        <a href="/albums/{{ favorite.id }}" name="name" class="item">
+
+            <img src="{{ favorite.cover_medium}}" alt="{{ favorite.title }}"><br>
+            <!-- <h4>{{ album.title }}</h4> -->
+        </a>
+        {% else %}
+        The collection is empty.
+        {% endfor %}
+    </section><br>
+
+    <a href="/users/logout">
+        <button>Logout</button>
+    </a>
 
 </div>
 {% endblock %}

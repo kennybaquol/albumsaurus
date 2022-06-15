@@ -2,6 +2,7 @@
 // Import Dependencies
 //////////////////////////////////////////////
 const mongoose = require("./connection");
+// const Album = require("./album");
 
 ////////////////////////////////////////////////
 // Define Model
@@ -9,10 +10,29 @@ const mongoose = require("./connection");
 // pull schema and model from mongoose
 const { Schema, model } = mongoose;
 
+// Make albumsSchema
+const albumsSchema = new Schema({
+  id: Number,
+  title: String,
+  cover_medium: String,
+  cover_big: String,
+  genre_id: Number,
+  artistID: Number,
+  artistName: String,
+
+
+  mbid: String,
+  releaseDate: Date,
+  listeners: Number,
+  playCount: Number,
+
+});
+
 // make user schema
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  album: { type: albumsSchema }
 });
 
 // make fruit model

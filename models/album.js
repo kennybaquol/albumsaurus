@@ -11,17 +11,21 @@ const { Schema, model } = mongoose
 
 // make albums schema
 const albumsSchema = new Schema({
-    name: String,
-    artist: String,
-    id: String,
-    mbid: String,
-    // url: 
-    releaseDate: Date,
-    // img: 
-    listeners: Number,
-    playCount: Number,
+  id: Number,
+  title: String,
+  cover_medium: String,
+  cover_big: String,
+  genre_id: Number,
+  artistID: Number,
+  artistName: String,
 
-  });
+
+  mbid: String,
+  releaseDate: Date,
+  listeners: Number,
+  playCount: Number,
+
+});
 
 // make album model
 const Album = model("Album", albumsSchema)

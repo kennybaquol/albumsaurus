@@ -2,7 +2,7 @@
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express");
-const Album = require("../models/album");
+// const Album = require("../models/album");
 const fetch = require('node-fetch')
 
 /////////////////////////////////////////
@@ -92,7 +92,8 @@ router.get("/", (req, res) => {
                     res.render('albums', {
                         data: albumData,
                         artistName,
-                        username: req.session.username
+                        username: req.session.username,
+                        favorites : req.session.album
                     })
                 })
                 .catch((error) => {
@@ -121,7 +122,7 @@ router.get('/:id', (req, res) => {
             return apiResponse.json()
         })
         .then((jsonData) => {
-            // console.log("here is the album data: ", jsonData)
+            console.log("here is the album data: ", jsonData)
             const albumData = jsonData
             const key = process.env.LAST_FM_API_KEY
             const artist = albumData.artist.name
@@ -158,6 +159,12 @@ router.get('/:id', (req, res) => {
 // edit route
 router.get('/:id/edit', (req, res) => {
     // res.render('albums/show/edit')
+})
+
+// Favorite route
+router.post('/:id/favorite', (req, res) => {
+
+    res.redirect('/albums')
 })
 
 // create route

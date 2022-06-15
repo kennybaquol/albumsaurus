@@ -1,10 +1,14 @@
 {% layout "layout.liquid" %} {% block content %}
 <div>
-    <h2>{{ album.title }}</h2>
+    <h2 name="title">{{ album.title }}</h2>
     <img src="{{ album.cover_big }}" alt="{{ album.title }}"><br>
     {% if summary %}
     <p>{{ summary }}</p>
-    {% endif %}
-    
+    {% endif %}<br>
+
+    <form action="/albums/{{ album.id }}/favorite" method="POST">
+        <button>Add to My Favorites</button>
+    </form>
+
 </div>
 {% endblock %}

@@ -74,6 +74,7 @@ router.post("/signup", async (req, res) => {
         })
 })
 
+// Logout route
 router.get("/logout", (req, res) => {
     // destroy session and redirect to main page
     req.session.destroy((err) => {
