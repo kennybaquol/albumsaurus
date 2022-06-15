@@ -125,6 +125,43 @@ router.get('/new', (req, res) => {
     res.render('albums/new')
 })
 
+// create route
+router.post('/', (req, res) => {
+    console.log('RAN CREATE POST ROUTE')
+    const albumId = Math.floor(Math.random()*9999999)
+    Album.create({
+        id: albumId,
+        title: req.body.title,
+        cover_medium: req.body.cover_medium,
+        cover_big: req.body.cover_big,
+        genre_id: req.body.genre_id,
+        artistID: req.body.artistID,
+        artistName: req.body.artistName,
+    }, (error, album) => {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            // console.log(album)
+            User.updateOne({ name: req.session.username },
+                {
+                    $addToSet: {
+                        favorites: album
+                    }
+                }, (error, user) => {
+
+                    if (error) {
+                        console.log(error)
+                    }
+                    else {
+                        res.redirect('/albums')
+                    }
+                }
+            )
+        }
+    })
+})
+
 // show route
 router.get('/:id', (req, res) => {
     const id = req.params.id
@@ -171,6 +208,7 @@ router.get('/:id', (req, res) => {
 
 // edit route
 router.get('/:id/edit', (req, res) => {
+    console.log('RAN EDIT ROUTE')
     const albumId = req.params.id
     User.findOne({ name: req.session.username }, (error, user) => {
         if (error) {
@@ -216,45 +254,6 @@ router.post('/:id/favorite', (req, res) => {
     )
 })
 
-// create route
-router.post('/', (req, res) => {
-    console.log('RAN CREATE POST ROUTE')
-    const albumId = Math.floor(Math.random()*9999999)
-    Album.create({
-        id: albumId,
-        title: req.body.title,
-        cover_medium: req.body.cover_medium,
-        cover_big: req.body.cover_big,
-        genre_id: req.body.genre_id,
-        artistID: req.body.artistID,
-        artistName: req.body.artistName,
-    }, (error, album) => {
-        if (error) {
-            console.log(error)
-        }
-        else {
-            // console.log(album)
-            User.updateOne({ name: req.session.username },
-                {
-                    $addToSet: {
-                        favorites: album
-                    }
-                }, (error, user) => {
-
-                    if (error) {
-                        console.log(error)
-                    }
-                    else {
-                        res.redirect('/albums')
-                    }
-                }
-            )
-        }
-    })
-
-
-})
-
 // update route
 router.put('/:id', (req, res) => {
     const albumId = req.params.id
@@ -270,8 +269,8 @@ router.put('/:id', (req, res) => {
                 console.log(error)
             }
             else {
-                console.log("PUSHED PUSHED PUSHED")
-                res.redirect('/albums')
+                console.log("UPDATED UPDATED UPDATED")
+                res.redirect(`/albums/${albumId}/edit`)
             }
         }
     )
@@ -280,7 +279,7 @@ router.put('/:id', (req, res) => {
 // delete route
 router.delete('/:id', (req, res) => {
     const albumId = req.params.id
-    console.log('RAN UPDATE PUT ROUTE')
+    console.log('RAN DELETE POST ROUTE')
     User.updateOne({ name: req.session.username },
         {
             $pull: {

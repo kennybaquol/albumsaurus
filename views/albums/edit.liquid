@@ -13,13 +13,11 @@
 
     <!-- <p>{{ summary }}</p> -->
 
-    <form action="/albums?method_PUT" method="POST">
+    <form action="/albums/{{ currentAlbum.id }}?_method=PUT" method="POST">
         <input type="text" class="albumInfo" name="id" value="{{ currentAlbum.id }}">
         <input type="text" name="title" value="{{ currentAlbum.title }}" placeholder="Album Title"><br>
-        <input type="text" name="cover_medium" value="{{ currentAlbum.cover_medium }}"
-            placeholder="Album Artwork Link"><br>
-        <input type="text" name="cover_big" value="{{ currentAlbum.cover_big }}"
-            placeholder="Album Artwork Link (Large)"><br>
+        <input type="text" name="cover_medium" value="{{ currentAlbum.cover_medium }}" placeholder="Album Artwork Link"><br>
+        <input type="text" name="cover_big" value="{{ currentAlbum.cover_big }}" placeholder="Album Artwork Link (Large)"><br>
         <input type="text" name="genre_id" value="{{ currentAlbum.genre_id }}" placeholder="Album Genre(s)"><br>
         <input type="text" name="artistName" value="{{ currentAlbum.artistName }}" placeholder="Artist Name"><br>
         <input type="text" name="summary" value="{{ summary }}" placeholder="Album Summary"><br><br>
