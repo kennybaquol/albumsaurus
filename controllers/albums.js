@@ -231,6 +231,7 @@ router.post('/:id/favorite', (req, res) => {
 
 // create route
 router.post('/', (req, res) => {
+    
     res.redirect('albums')
 })
 
@@ -238,27 +239,6 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     const albumId = req.params.id
     console.log('RAN UPDATE PUT ROUTE')
-    // User.updateOne({ name: req.session.username },
-    //     {
-    //         $pull: {
-    //             favorites: {
-    //                 id: albumId
-    //             }
-    //         },
-    //         $addToSet: {
-    //             favorites: req.body
-    //         }
-    //     }, (error, user) => {
-    //         if (error) {
-    //             console.log(error)
-    //         }
-    //         else {
-    //             console.log("PULLED PULLED PULLED")
-    //             // res.redirect('/albums')
-    //         }
-    //     }
-    // )
-    // then(() => {
     User.updateOne({ name: req.session.username },
         {
             $set: {
@@ -275,7 +255,6 @@ router.put('/:id', (req, res) => {
             }
         }
     )
-    // })
 })
 
 // delete route

@@ -1,5 +1,18 @@
 {% layout "layout.liquid" %} {% block content %}
 <div>
+    <a href="/albums">
+        <button>Back to Albums</button>
+    </a><br><br>
 
+    <form action="/albums/{{ currentAlbum.id }}/new?_method=PUT" method="POST">
+        <input type="text" class="albumInfo" name="id">
+        <input type="text" name="title" placeholder="Album Title"><br>
+        <input type="text" name="cover_medium" placeholder="Album Artwork Link"><br>
+        <input type="text" name="cover_big" placeholder="Album Artwork Link (Large)"><br>
+        <input type="text" name="genre_id" placeholder="Album Genre(s)"><br>
+        <input type="text" name="artistName" placeholder="Artist Name"><br>
+        <input type="text" name="summary" placeholder="Album Summary"><br><br>
+        <input type="submit" value="Add Custom Album to My Favorites">
+    </form>
 </div>
 {% endblock %}

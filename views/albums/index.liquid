@@ -19,8 +19,6 @@
     <h2>My Favorites</h2>
     <section>
         {% for favorite in favorites limit: 3 %}
-        {{ favorite.title }}
-        Hi.
 
         <a href="/albums/{{ favorite.id }}/edit" name="name" class="item">
 
@@ -30,6 +28,10 @@
         The collection is empty.
         {% endfor %}
     </section><br>
+
+    <a href="/albums/new">
+        <button>Add Custom Album</button>
+    </a><br><br>
 
     <a href="/users/logout">
         <button>Logout</button>

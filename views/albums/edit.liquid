@@ -13,7 +13,7 @@
 
     <!-- <p>{{ summary }}</p> -->
 
-    <form action="/albums/{{ currentAlbum.id }}?_method=PUT" method="POST">
+    <form action="/albums" method="POST">
         <input type="text" class="albumInfo" name="id" value="{{ currentAlbum.id }}">
         <input type="text" name="title" value="{{ currentAlbum.title }}" placeholder="Album Title"><br>
         <input type="text" name="cover_medium" value="{{ currentAlbum.cover_medium }}"
