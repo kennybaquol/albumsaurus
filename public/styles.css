@@ -1,7 +1,8 @@
 body {
     text-align: center;
     background-color: bisque;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    font-family: 'Courier New', Courier, monospace;
     margin: 0 10%;
 }
 
