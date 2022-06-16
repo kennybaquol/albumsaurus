@@ -149,35 +149,71 @@ router.post('/', (req, res) => {
 // Show route
 router.get('/:id', (req, res) => {
     const id = req.params.id
-    const requestURL = `https://api.deezer.com/album/${id}`
-    fetch(requestURL)
+    const deezerURL = `https://api.deezer.com/album/${id}`
+    fetch(deezerURL)
         .then((apiResponse) => {
             // console.log(apiResponse)
             return apiResponse.json()
         })
-        .then((jsonData) => {
-            console.log("here is the album data: ", jsonData)
-            const albumData = jsonData
+        .then((deezerAlbumData) => {
+            const albumData = deezerAlbumData
             const key = process.env.LAST_FM_API_KEY
-            const artist = albumData.artist.name
+            let artistName = albumData.artist.name
+            let artistId
+
+            // artistName = 'outkast'
+
             const title = albumData.title
-            const requestURL2 = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${key}&artist=${artist}&album=${title}&format=json`
-            fetch(requestURL2)
+            // const requestURL2 = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${key}&artist=${artist}&album=${title}&format=json`
+            const artistData = `https://www.theaudiodb.com/api/v1/json/2/search.php?s=${artistName}`
+            fetch(artistData)
                 .then((apiResponse) => {
-                    // console.log(apiResponse)
                     return apiResponse.json()
                 })
-                .then((lfmData) => {
-                    let summary
-                    try {
-                        summary = lfmData.album.wiki.summary
-                    }
-                    catch (error) {
-                    }
-                    res.render('albums/show', {
-                        album: albumData,
-                        summary
-                    })
+                .then((artistData) => {
+                    artistId = artistData.artists[0].idArtist
+                    console.log(artistId)
+
+                    const dbData = `https://theaudiodb.com/api/v1/json/2/album.php?i=${artistId}`
+
+                    fetch(dbData)
+                        .then((apiResponse) => {
+                            // console.log(apiResponse)
+                            return apiResponse.json()
+                        })
+                        .then((dbData) => {
+                            let summary = []
+
+                            for (let i = 0; i < dbData.album.length; i++) {
+                                if (dbData.album[i].strAlbum === deezerAlbumData.title) {
+                                    console.log(dbData.album[i].strDescriptionEN)
+
+                                    summary.push(dbData.album[i].intYearReleased)
+                                    summary.push(dbData.album[i].strStyle)
+                                    summary.push(dbData.album[i].strGenre)
+                                    summary.push(dbData.album[i].strLabel)
+                                    summary.push(dbData.album[i].strAlbumThumbBack)
+                                    summary.push(dbData.album[i].strDescriptionEN)
+                                    summary.push(dbData.album[i].strMood)
+                                    break
+                                }
+                            }
+
+                            // try {
+                            //     summary = dbData.album.wiki.summary
+                            // }
+                            // catch (error) {
+                            // }
+
+                            res.render('albums/show', {
+                                album: albumData,
+                                summary
+                            })
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            res.json({ error })
+                        })
                 })
                 .catch((error) => {
                     console.log(error)

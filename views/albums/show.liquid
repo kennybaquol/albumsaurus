@@ -5,9 +5,11 @@
     </a>
     
     <h2 name="title">{{ album.title }}</h2>
+    <h3>{{album.artist.name }}</h3>
+    <h4>{{ summary[0] }}</h4>
     <img src="{{ album.cover_big }}" alt="{{ album.title }}"><br>
-    {% if summary %}
-    <p>{{ summary }}</p>
+    {% if summary[5] %}
+    <p>{{ summary[5] }}</p>
     {% endif %}<br>
 
     <form action="/albums/{{ album.id }}/favorite" method="POST">
@@ -18,6 +20,11 @@
         <input type="text" class="albumInfo" name="genre_id" value="{{ album.genre_id }}">
         <input type="text" class="albumInfo" name="artistID" value="{{ album.artist.id }}">
         <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}">
+
+
+        <!-- <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}">
+        <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}">
+        <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}"> -->
         <input type="text" class="albumInfo" name="summary" value="{{ summary }}">
         <button>Add to My Favorites</button>
     </form>

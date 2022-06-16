@@ -9,9 +9,19 @@ const mongoose = require("./connection");
 // pull schema and model from mongoose
 const { Schema, model } = mongoose
 
-// make albums schema
+// Make summaries schema
+const summariesSchema = new Schema({
+  intYearReleased: Number,
+  strStyle: String,
+  strGenre: String,
+  strLabel: String,
+  strAlbumThumbBack: String,
+  strDescriptionEN: String,
+  strMood: String
+});
+
+// Make albums schema
 const albumsSchema = new Schema({
-  // _id: ObjectId,
   id: Number,
   title: String,
   cover_medium: String,
@@ -19,12 +29,7 @@ const albumsSchema = new Schema({
   genre_id: Number,
   artistID: Number,
   artistName: String,
-
-
-  // mbid: String,
-  // releaseDate: Date,
-  // listeners: Number,
-  // playCount: Number,
+  summaries: [{ type: summariesSchema }]
 
 });
 
