@@ -128,7 +128,7 @@ router.get('/new', (req, res) => {
 // create route
 router.post('/', (req, res) => {
     console.log('RAN CREATE POST ROUTE')
-    const albumId = Math.floor(Math.random()*9999999)
+    const albumId = Math.floor(Math.random() * 9999999)
     Album.create({
         id: albumId,
         title: req.body.title,
@@ -222,7 +222,7 @@ router.get('/:id/edit', (req, res) => {
                     break
                 }
             }
-            console.log(currentAlbum)
+            // console.log(currentAlbum)
             res.render(`albums/edit`, {
                 currentAlbum
             })
@@ -258,11 +258,13 @@ router.post('/:id/favorite', (req, res) => {
 router.put('/:id', (req, res) => {
     const albumId = req.params.id
     console.log('RAN UPDATE PUT ROUTE')
-    User.updateOne({ name: req.session.username },
+    User.updateOne({
+        name: req.session.username, 
+        'favorites.id' : albumId
+    },
         {
             $set: {
-                favorites: { id: albumId },
-                favorites: req.body
+                'favorites.$' : req.body
             }
         }, (error, user) => {
             if (error) {
