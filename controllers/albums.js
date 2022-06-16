@@ -26,10 +26,10 @@ router.use((req, res, next) => {
 /////////////////////////////////////////
 // Routes
 /////////////////////////////////////////
-// index route
+// Index route
 router.get("/", (req, res) => {
     // Determine artist
-    const artistId = Math.floor(Math.random() * 500) + 1
+    const artistId = Math.floor(Math.random() * 300) + 1
     const artistURL = `https://api.deezer.com/artist/${artistId}`
 
     // Fetch data on all artists from selected genre
@@ -49,7 +49,7 @@ router.get("/", (req, res) => {
                     const albumsData = jsonData.data
                     let currentAlbumIndex
                     let selectedAlbums = []
-                    // console.log('current index/artist being tried is: ' + artistId + ', ' + artistData.name)
+                    console.log('current index/artist being tried is: ' + artistId + ', ' + artistData.name)
 
                     // For up to 50 times,
                     for (let i = 0; i < 50; i++) {
@@ -96,12 +96,12 @@ router.get("/", (req, res) => {
         })
 })
 
-// new route
+// New route
 router.get('/new', (req, res) => {
     res.render('albums/new')
 })
 
-// create route
+// Create route
 router.post('/', (req, res) => {
     console.log('RAN CREATE POST ROUTE')
     const albumId = Math.floor(Math.random() * 9999999)
@@ -138,7 +138,7 @@ router.post('/', (req, res) => {
     })
 })
 
-// show route
+// Show route
 router.get('/:id', (req, res) => {
     const id = req.params.id
     const requestURL = `https://api.deezer.com/album/${id}`
@@ -182,7 +182,7 @@ router.get('/:id', (req, res) => {
         })
 })
 
-// edit route
+// Edit route
 router.get('/:id/edit', (req, res) => {
     console.log('RAN EDIT ROUTE')
     const albumId = req.params.id
@@ -230,7 +230,7 @@ router.post('/:id/favorite', (req, res) => {
     )
 })
 
-// update route
+// Update route
 router.put('/:id', (req, res) => {
     const albumId = req.params.id
     console.log('RAN UPDATE PUT ROUTE')
@@ -254,7 +254,7 @@ router.put('/:id', (req, res) => {
     )
 })
 
-// delete route
+// Delete route
 router.delete('/:id', (req, res) => {
     const albumId = req.params.id
     console.log('RAN DELETE POST ROUTE')

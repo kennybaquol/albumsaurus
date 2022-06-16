@@ -1,10 +1,10 @@
 body {
     text-align: center;
-    background-color: rgb(31, 31, 43);
-    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(11, 0, 65, 0.9500175070028011) 32%, rgb(17, 117, 136) 100%);
+    /* Gradient created with https://cssgradient.io/ */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
-    margin: 0 10%;
+    margin: 0;
 }
 
 p {
@@ -16,16 +16,44 @@ section {
     justify-content: center;
 }
 
-.discover {
-    /* background-color: aqua; */
+.discover, .favorites {
+    background-color: black;
+    animation: alternate 5s colorChange infinite;
+}
+
+@keyframes colorChange {
+    from {
+        background-color: rgb(49, 49, 49);
+    }
+
+    to {
+        background-color: grey;
+    }
 }
 
 button {
     background-color: white;
-    /* /* border-radius: 5px; */
-    /* border-style: dashed; */
-    color: rgb(61, 52, 52);
+    border: 1px solid rgb(26, 31, 35);
+    border-radius: 5px;
+    box-shadow: rgb(27, 31, 35) 0 1px 0;
+    color: rgb(25, 20, 20);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: small;
+    line-height: 25px;
+    padding: 0 10px;
+    transition: color 60ms;
+}
+
+button:hover {
+    background-color: grey;
+    transition: 0.2s;
+}
+
+a:hover {
+    color: grey;
+    opacity: 0.5;
+    transition: 0.2s;
+    /* Transition effects on hover (color) */
 }
 
 .item {
@@ -35,39 +63,3 @@ button {
 .albumInfo {
     display: none;
 }
-
-/* <!-- HTML !-->
-<button class="button-1" role="button">Button 1</button>
-
-/* CSS */
-/* .button-1 {
-  background-color: #EA4C89;
-  border-radius: 8px;
-  border-style: none;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  height: 40px;
-  line-height: 20px;
-  list-style: none;
-  margin: 0;
-  outline: none;
-  padding: 10px 16px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: color 100ms;
-  vertical-align: baseline;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-1:hover,
-.button-1:focus {
-  background-color: #F082AC;
-} */
