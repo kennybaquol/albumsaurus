@@ -53,5 +53,8 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 ## Stretch goals / ICE BOX:
 - [x] User creation and authorization
 - [] Give users the ability to search through their favorite albums for quicker future reference
-- [] Replace Last FM API with an API that has wiki summaries and additional interesting data on a higher percentage of albums (i.e. Wikipedia)
+- [] Replace Last FM API with an API that has wiki summaries and additional interesting data on a higher percentage of albums (examples below)
+    - [] https://developer.musixmatch.com/documentation/api-reference/album-get
+    - [] https://developer.napster.com/api/v2.2#albums
+    - [] https://www.theaudiodb.com/api_guide.php
 - [] Display how many users have an album saved

@@ -18,7 +18,7 @@
 
     <h2>My Favorites</h2>
     <section class="favorites">
-        {% for favorite in favorites limit: 48 %}
+        {% for favorite in favorites reversed limit: 48 %}
 
         <a href="/albums/{{ favorite.id }}/edit" name="name" class="item">
 
