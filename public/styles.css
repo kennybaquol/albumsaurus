@@ -1,7 +1,9 @@
 body {
     text-align: center;
-    background-color: bisque;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: rgb(31, 31, 43);
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
     margin: 0 10%;
 }
 
@@ -14,6 +16,18 @@ section {
     justify-content: center;
 }
 
+.discover {
+    /* background-color: aqua; */
+}
+
+button {
+    background-color: white;
+    /* /* border-radius: 5px; */
+    /* border-style: dashed; */
+    color: rgb(61, 52, 52);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .item {
     margin: 2%;
 }
@@ -21,3 +35,39 @@ section {
 .albumInfo {
     display: none;
 }
+
+/* <!-- HTML !-->
+<button class="button-1" role="button">Button 1</button>
+
+/* CSS */
+/* .button-1 {
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #F082AC;
+} */
