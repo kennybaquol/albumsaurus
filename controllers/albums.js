@@ -28,71 +28,88 @@ router.use((req, res, next) => {
 /////////////////////////////////////////
 // index route
 router.get("/", (req, res) => {
+    // Determine genre
     const artistURL = `https://api.deezer.com/genre/152/artists`
+
+    // Fetch data on all artists from selected genre
     fetch(artistURL)
         .then((apiResponse) => {
-            // console.log(apiResponse)
             return apiResponse.json()
         })
-        .then((jsonData) => {
-            const artistData = jsonData.data
-            // console.log("here is the data: ", artistData)
-            // let currentArtistIndex = -1
-            // let currentIndex
-            // let numberOfAlbums
-            // while (currentArtistIndex < 0) {
-            //     numberOfAlbums = 0
-            //     currentIndex = Math.floor(Math.random() * artistData.length)
-            //     console.log('current index being tried is: ' + currentIndex + ', ' + artistData[currentIndex].name)
-            //     for (let i = 0; i < artistData.length; i++) {
-            //         console.log('current number of albums: ' + numberOfAlbums)
-            //         if (artistData[i].record_type === 'album') {
-            //             numberOfAlbums++
-            //             if (numberOfAlbums > 3) {
-            //                 currentArtistIndex = currentIndex
-            //                 break
-            //             }
-            //         }
-            //     }
-            //     // if (true) {
-            //     //     console.log(currentIndex)
-            //     // }
-            // }
-            let currentArtistIndex = Math.floor(Math.random() * artistData.length)
-            const artistId = artistData[currentArtistIndex].id
-            const artistName = artistData[currentArtistIndex].name
-            // console.log(artistName)
+        .then((jsd) => {
+            const artistsData = jsd.data
+            // Determine artist
+            const artistId = 9
+            const artistName = 'Coldplay'
             const requestURL = `https://api.deezer.com/artist/${artistId}/albums`
+
+            // setTimeout(() => {
+
+            // }, 1000);
+
+            // Fetch data on all albums from selected artist
             fetch(requestURL)
                 .then((apiResponse) => {
-                    // console.log(apiResponse)
                     return apiResponse.json()
                 })
                 .then((jsonData) => {
-                    // const albumData = jsonData.data
+                    const albumsData = jsonData.data
+                    console.log("here is the albums data: ", albumsData)
+
+
+                    let currentArtistIndex = -1
+                    let temp2
+                    let numberOfAlbums
                     let temp = []
-                    let currentAlbumIndex
-                    //until there are 3 values in temp array
-                    while (temp.length < 3) {
-                        // if the current album is an "album"
-                        currentAlbumIndex = Math.floor(Math.random() * jsonData.data.length)
-                        // console.log('current album index is: ' + currentAlbumIndex)
-                        if (jsonData.data[currentAlbumIndex].record_type) {
-                            // === 'album') {
-                            // add it to the temp array if it's not already in it
-                            if (!temp.includes(jsonData.data[currentAlbumIndex])) {
-                                temp.push(jsonData.data[currentAlbumIndex])
-                                // console.log(temp)
+
+                    // While an artist hasn't yet been selected
+                    // while (currentArtistIndex < 0) {
+                    numberOfAlbums = 0
+                    temp2 = Math.floor(Math.random() * albumsData.length)
+
+                    temp2 = artistId
+
+                    console.log('current index being tried is: ' + temp2 + ', ' + artistsData[temp2].name)
+                    for (let i = 0; i < 50; i++) {
+                        console.log('current number of albums: ' + numberOfAlbums)
+                        console.log('current release being tried: ' + albumsData[i].record_type + ', ' + albumsData[i].title)
+                        if (albumsData[i].record_type === 'album') {
+                            numberOfAlbums++
+                            if (!temp.includes(albumsData[i])) {
+                                temp.push(albumsData[i])
+                            }
+                            if (numberOfAlbums > 2) {
+                                currentArtistIndex = temp2
+                                break
                             }
                         }
                     }
+
+
+
+                    // const albumData = albumsData.data
+                    // let temp = []
+                    // let currentAlbumIndex
+                    //until there are 3 values in temp array
+                    // while (temp.length < 3) {
+                    // if the current album is an "album"
+                    // currentAlbumIndex = Math.floor(Math.random() * albumsData.length)
+                    // console.log('current album index is: ' + currentAlbumIndex)
+                    // if (albumsData.data[currentAlbumIndex].record_type) {
+                        // === 'album') {
+                        // add it to the temp array if it's not already in it
+                        // if (!temp.includes(albumsData.data[currentAlbumIndex])) {
+                            // temp.push(albumsData.data[currentAlbumIndex])
+                            // console.log(temp)
+                    //     }
+                    // }
+                    // }
                     console.log(temp.length)
                     const albumData = temp
                     // console.log("here is the data: ", albumData[0].record_type)
                     // res.render('albums', {albumData})
                     let favoriteAlbums
-                    const currentUsername = req.session.username
-                    const currentUser = User.findOne({ name: currentUsername }, (error, user) => {
+                    const currentUser = User.findOne({ name: req.session.username }, (error, user) => {
                         if (error) {
                             console.log(error)
                         }
@@ -107,12 +124,12 @@ router.get("/", (req, res) => {
                             })
                         }
                     })
+                })
 
-                })
-                .catch((error) => {
-                    console.log(error)
-                    res.json({ error })
-                })
+        })
+        .catch((error) => {
+            console.log(error)
+            res.json({ error })
         })
         .catch((error) => {
             console.log(error)
@@ -259,12 +276,12 @@ router.put('/:id', (req, res) => {
     const albumId = req.params.id
     console.log('RAN UPDATE PUT ROUTE')
     User.updateOne({
-        name: req.session.username, 
-        'favorites.id' : albumId
+        name: req.session.username,
+        'favorites.id': albumId
     },
         {
             $set: {
-                'favorites.$' : req.body
+                'favorites.$': req.body
             }
         }, (error, user) => {
             if (error) {
