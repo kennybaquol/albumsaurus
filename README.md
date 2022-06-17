@@ -58,3 +58,4 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
     - [] https://developer.napster.com/api/v2.2#albums
     - [] https://www.theaudiodb.com/api_guide.php
 - [] Display how many users have an album saved
+- [] Have discover section of index page change every 5 sections (w/ animations) instead of requiring the user to refresh the page every time

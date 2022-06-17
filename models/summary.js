@@ -20,23 +20,10 @@ const summariesSchema = new Schema({
   strMood: String
 });
 
-// Make albums schema
-const albumsSchema = new Schema({
-  id: Number,
-  title: String,
-  cover_medium: String,
-  cover_big: String,
-  genre_id: Number,
-  artistID: Number,
-  artistName: String,
-  summaries: [{ type: summariesSchema }]
-
-});
-
 // make album model
-const Album = model("Album", albumsSchema)
+const Summary = model("Summary", summariesSchema)
 
 ////////////////////////////////////////////////
 // Export model
 ////////////////////////////////////////////////
-module.exports = Album
+module.exports = Summary

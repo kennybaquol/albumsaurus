@@ -3,20 +3,33 @@
     <a href="/albums">
         <button>Back to Albums</button>
     </a><br>
-    
+
 
     <img src="{{ album.cover_big }}" alt="{{ album.title }}" class="single"><br>
     <h2 name="title">{{ album.title }}</h2>
     <h3>{{album.artist.name }}</h3>
+    {% if summary[0] %}
     <h4>{{ summary[0] }}</h4>
+    {% endif %}
+    {% if summary[1] %}
     <h4>{{ summary[1] }}</h4>
-    <h4>{{ summary[2] }}</h4> 
+    {% endif %}
+    {% if summary[2] %}
+    <h4>{{ summary[2] }}</h4>
+    {% endif %}
+    {% if summary[3] %}
     <h4>{{ summary[3] }}</h4>
+    {% endif %}
+    {% if summary[6] %}
+    <p>Mood: {{ summary[6] }}</p>
+    {% endif %}<br>
     {% if summary[5] %}
     <p>{{ summary[5] }}</p>
     {% endif %}<br>
 
-    <img src="{{ summary[4] }}" alt="{{ album.title }}">
+    {% if summary[4] %}
+    <img src="{{ summary[4] }}" alt="{{ album.title }}" class="artwork2">
+    {% endif %}<br><br>
 
     <form action="/albums/{{ album.id }}/favorite" method="POST">
         <input type="text" class="albumInfo" name="id" value="{{ album.id }}">
@@ -27,12 +40,14 @@
         <input type="text" class="albumInfo" name="artistID" value="{{ album.artist.id }}">
         <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}">
 
-
-        <!-- <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}">
-        <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}">
-        <input type="text" class="albumInfo" name="artistName" value="{{ album.artist.name }}"> -->
-        <input type="text" class="albumInfo" name="summary" value="{{ summary }}">
-        <button>Add to My Favorites</button>
+        <input type="text" class="albumInfo" name="intYearReleased" value="{{ summary[0] }}">
+        <input type="text" class="albumInfo" name="strStyle" value="{{ summary[1] }}">
+        <input type="text" class="albumInfo" name="strGenre" value="{{ summary[2] }}">
+        <input type="text" class="albumInfo" name="strLabel" value="{{ summary[3] }}">
+        <input type="text" class="albumInfo" name="strAlbumThumbBack" value="{{ summary[4] }}">
+        <input type="text" class="albumInfo" name="strDescriptionEN" value="{{ summary[5] }}">
+        <input type="text" class="albumInfo" name="strMood" value="{{ summary[6] }}">
+        <button>Add to My Favorites</button><br><br>
     </form>
 
 </div>

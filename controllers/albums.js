@@ -5,6 +5,7 @@ const express = require("express");
 const Album = require("../models/album");
 const fetch = require('node-fetch');
 const User = require("../models/user");
+const Summary = require("../models/summary");
 
 /////////////////////////////////////////
 // Create Route
@@ -29,7 +30,7 @@ router.use((req, res, next) => {
 // Index route
 router.get("/", (req, res) => {
     // Determine artist
-    const artistId = Math.floor(Math.random() * 500) + 1
+    const artistId = Math.floor(Math.random() * 250) + 1
     const artistURL = `https://api.deezer.com/artist/${artistId}`
 
     // Fetch data on all artists from selected genre
@@ -38,7 +39,7 @@ router.get("/", (req, res) => {
             return apiResponse.json()
         })
         .then((artistData) => {
-            if (!artistData.nb_album && artistData.nb_album >= 5) {
+            if (!artistData.nb_album && artistData.nb_album >= 8) {
                 console.log('EXISTS EXISTS EXISTS')
                 setTimeout(() => {
                     res.redirect('albums')
@@ -66,12 +67,15 @@ router.get("/", (req, res) => {
 
                             // Add the current release to selectedAlbums if the release is type 'album'
                             // and hasn't already been selected
-                            if (albumsData[currentAlbumIndex].record_type === 'album') {
-                                if (!selectedAlbums.includes(albumsData[currentAlbumIndex])) {
-                                    selectedAlbums.push(albumsData[currentAlbumIndex])
-                                }
-                                if (selectedAlbums.length > 2) {
-                                    break
+                            if (albumsData[currentAlbumIndex]) {
+                                console.log('Album exists!')
+                                if (albumsData[currentAlbumIndex].record_type === 'album') {
+                                    if (!selectedAlbums.includes(albumsData[currentAlbumIndex])) {
+                                        selectedAlbums.push(albumsData[currentAlbumIndex])
+                                    }
+                                    if (selectedAlbums.length > 2) {
+                                        break
+                                    }
                                 }
                             }
                         }
@@ -113,35 +117,53 @@ router.get('/new', (req, res) => {
 router.post('/', (req, res) => {
     console.log('RAN CREATE POST ROUTE')
     const albumId = Math.floor(Math.random() * 9999999)
-    Album.create({
-        id: albumId,
-        title: req.body.title,
-        cover_medium: req.body.cover_medium,
-        cover_big: req.body.cover_big,
-        genre_id: req.body.genre_id,
-        artistID: req.body.artistID,
-        artistName: req.body.artistName,
-    }, (error, album) => {
+
+    Summary.create({
+        intYearReleased: req.body.intYearReleased,
+        strStyle: req.body.strStyle,
+        strGenre: req.body.strGenre,
+        strLabel: req.body.strLabel,
+        strAlbumThumbBack: req.body.strAlbumThumbBack,
+        strDescriptionEN: req.body.strDescriptionEN,
+        strMood: req.body.strMood
+    }, (error, summary) => {
+        Album.create({
+            id: albumId,
+            title: req.body.title,
+            cover_medium: req.body.cover_medium,
+            cover_big: req.body.cover_big,
+            genre_id: req.body.genre_id,
+            artistID: req.body.artistID,
+            artistName: req.body.artistName,
+            summaries: summary
+        }, (error, album) => {
+            if (error) {
+                console.log(error)
+            }
+            else {
+                // console.log(album)
+                User.updateOne({ name: req.session.username },
+                    {
+                        $addToSet: {
+                            favorites: album
+                        }
+                    }, (error, user) => {
+
+                        if (error) {
+                            console.log(error)
+                        }
+                        else {
+                            res.redirect('/albums')
+                        }
+                    }
+                )
+            }
+        })
         if (error) {
             console.log(error)
         }
         else {
-            // console.log(album)
-            User.updateOne({ name: req.session.username },
-                {
-                    $addToSet: {
-                        favorites: album
-                    }
-                }, (error, user) => {
-
-                    if (error) {
-                        console.log(error)
-                    }
-                    else {
-                        res.redirect('/albums')
-                    }
-                }
-            )
+        //     res.redirect('/albums')
         }
     })
 })
@@ -179,18 +201,20 @@ router.get('/:id', (req, res) => {
 
                         const dbData = `https://theaudiodb.com/api/v1/json/2/album.php?i=${artistId}`
 
+
+                        let summary = []
+
                         fetch(dbData)
                             .then((apiResponse) => {
                                 // console.log(apiResponse)
                                 return apiResponse.json()
                             })
                             .then((dbData) => {
-                                let summary = []
 
                                 for (let i = 0; i < dbData.album.length; i++) {
                                     if (dbData.album[i].strAlbum === deezerAlbumData.title) {
-                                        console.log(dbData.album[i].strDescriptionEN)
-
+                                        // console.log('Description that SHOULD be inputted: ' + dbData.album[i].strDescriptionEN)
+                                        description = dbData.album[i].strDescriptionEN
                                         summary.push(dbData.album[i].intYearReleased)
                                         summary.push(dbData.album[i].strStyle)
                                         summary.push(dbData.album[i].strGenre)
@@ -202,16 +226,17 @@ router.get('/:id', (req, res) => {
                                     }
                                 }
 
-                                // try {
-                                //     summary = dbData.album.wiki.summary
-                                // }
-                                // catch (error) {
-                                // }
-
+                            })
+                            .then((dbData) => {
+                                console.log('SUMMARY: ' + summary)
                                 res.render('albums/show', {
                                     album: albumData,
                                     summary
                                 })
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                res.json({ error })
                             })
                             .catch((error) => {
                                 console.log(error)
@@ -246,12 +271,15 @@ router.get('/:id/edit', (req, res) => {
             for (let i = 0; i < user.favorites.length; i++) {
                 if (user.favorites[i].id == albumId) {
                     currentAlbum = user.favorites[i]
+                    // console.log('CURRENT ALBUM: ' + currentAlbum.summaries[0])
+                    // console.log(currentAlbum.summaries[0])
                     break
                 }
             }
             // console.log(currentAlbum)
             res.render(`albums/edit`, {
-                currentAlbum
+                currentAlbum,
+                summary: currentAlbum.summaries[0]
             })
         }
     })
@@ -259,50 +287,101 @@ router.get('/:id/edit', (req, res) => {
 
 // Favorite route
 router.post('/:id/favorite', (req, res) => {
-    // console.log(req.body)
-    // console.log(req.session.username)
-    // const currentUser = req.session.username
-    // console.log(req.session.favorites)
-    User.updateOne({ name: req.session.username },
-        {
-            $addToSet: {
-                favorites: req.body
-            }
-        }, (error, user) => {
-
-            if (error) {
-                console.log(error)
-            }
-            else {
-                // console.log(User.find({ name: req.session.username }))
-                res.redirect('/albums')
-            }
+    Summary.create({
+        intYearReleased: req.body.intYearReleased,
+        strStyle: req.body.strStyle,
+        strGenre: req.body.strGenre,
+        strLabel: req.body.strLabel,
+        strAlbumThumbBack: req.body.strAlbumThumbBack,
+        strDescriptionEN: req.body.strDescriptionEN,
+        strMood: req.body.strMood
+    }, (error, summary) => {
+        if (error) {
+            console.log(error)
         }
-    )
+        else {
+            Album.create({
+                id: req.body.id,
+                title: req.body.title,
+                cover_medium: req.body.cover_medium,
+                cover_big: req.body.cover_big,
+                genre_id: req.body.genre_id,
+                artistID: req.body.artistID,
+                artistName: req.body.artistName,
+                summaries: summary
+            }, (error, album) => {
+                if (error) {
+                    console.log(error)
+                }
+                else {
+                    User.updateOne({ name: req.session.username },
+                        {
+                            $addToSet: {
+                                favorites: album
+                            }
+                        }, (error, user) => {
+
+                            if (error) {
+                                console.log(error)
+                            }
+                            else {
+                                res.redirect('/albums')
+                            }
+                        }
+                    )
+                }
+            })
+        }
+    })
+
 })
 
 // Update route
 router.put('/:id', (req, res) => {
     const albumId = req.params.id
     console.log('RAN UPDATE PUT ROUTE')
-    User.updateOne({
-        name: req.session.username,
-        'favorites.id': albumId
-    },
-        {
-            $set: {
-                'favorites.$': req.body
-            }
-        }, (error, user) => {
-            if (error) {
-                console.log(error)
-            }
-            else {
-                console.log("UPDATED UPDATED UPDATED")
-                res.redirect(`/albums/${albumId}/edit`)
-            }
+
+    Summary.create({
+        intYearReleased: req.body.intYearReleased,
+        strStyle: req.body.strStyle,
+        strGenre: req.body.strGenre,
+        strLabel: req.body.strLabel,
+        strAlbumThumbBack: req.body.strAlbumThumbBack,
+        strDescriptionEN: req.body.strDescriptionEN,
+        strMood: req.body.strMood
+    }, (error, summary) => {
+        if (error) {
+            console.log(error)
         }
-    )
+        else {
+            console.log('SUMMARY IS: ' + summary)
+            User.updateOne({
+                name: req.session.username,
+                'favorites.id': albumId
+            },
+                {
+                    $set: {
+                        'favorites.$.title': req.body.title,
+                        'favorites.$.cover_medium': req.body.cover_medium,
+                        'favorites.$.cover_big': req.body.cover_big,
+                        'favorites.$.genre_id': req.body.genre_id,
+                        'favorites.$.artistID': req.body.artistID,
+                        'favorites.$.artistName': req.body.artistName,
+                        'favorites.$.summaries': summary
+
+                    }
+                }, (error, user) => {
+                    if (error) {
+                        console.log(error)
+                    }
+                    else {
+                        console.log("UPDATED UPDATED UPDATED")
+                        res.redirect(`/albums/${albumId}/edit`)
+                    }
+                }
+            )
+        }
+    })
 })
 
 // Delete route
@@ -321,7 +400,6 @@ router.delete('/:id', (req, res) => {
                 console.log(error)
             }
             else {
-                console.log(user.favorites)
                 res.redirect('/albums')
             }
         }

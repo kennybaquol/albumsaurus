@@ -9,9 +9,16 @@
         <input type="text" name="title" placeholder="Album Title"><br>
         <input type="text" name="cover_medium" placeholder="Album Artwork Link"><br>
         <input type="text" name="cover_big" placeholder="Album Artwork Link (Large)"><br>
-        <input type="text" name="genre_id" placeholder="Album Genre(s)"><br>
+        <input type="text" class="albumInfo" name="genre_id" placeholder="Album Genre(s)"><br>
         <input type="text" name="artistName" placeholder="Artist Name"><br>
-        <input type="text" name="summary" placeholder="Album Summary"><br><br>
+        <input type="text" name="summary" placeholder="Album Summary"><br>
+        <input type="text" name="intYearReleased" value="{{ summary.intYearReleased }}" placeholder="Year Released"><br>
+        <input type="text" class="albumInfo" name="strStyle" value="{{ summary.strStyle }}" placeholder="Album Title"><br>
+        <input type="text" name="strGenre" value="{{ summary.strGenre }}" placeholder="Album Genre"><br>
+        <input type="text" name="strLabel" value="{{ summary.strLabel }}" placeholder="Album Label"><br>
+        <input type="text" name="strMood" value="{{ summary.strMood }}" placeholder="Album Mood"><br>
+        <input type="text" name="strAlbumThumbBack" value="{{ summary.strAlbumThumbBack }}" placeholder="Back Album Artwork Link"><br>
+        <input type="text" name="strDescriptionEN" value="{{ summary.strDescriptionEN }}" placeholder="Album Summary"><br><br>
         <input type="submit" value="Add Custom Album to My Favorites">
     </form>
 </div>

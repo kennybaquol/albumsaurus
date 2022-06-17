@@ -4,28 +4,52 @@
         <button>Back to Albums</button>
     </a>
     <h2>{{ currentAlbum.title }}</h2>
+
+    {% if currentAlbum.cover_big %}
     <img src="{{ currentAlbum.cover_big }}" alt="{{ currentAlbum.title }}" class="single"><br>
-
-    {% assign summary = " " %}
-    {% if currentAlbum.summary %}
-    {% assign summary = currentAlbum.summary %}
+    {% endif %}
+    {% if summary.intYearReleased %}
+    <h4>{{ summary.intYearReleased }}</h4>
+    {% endif %}
+    {% if summary.strStyle %}
+    <h4>{{ summary.strStyle }}</h4>
+    {% endif %}
+    {% if summary.strGenre %}
+    <h4>{{ summary.strGenre }}</h4>
+    {% endif %}
+    {% if summary.strLabel %}
+    <h4>{{ summary.strLabel }}</h4>
+    {% endif %}
+    {% if summary.strMood %}
+    <p>Mood: {{ summary.strMood }}</p>
     {% endif %}<br>
-
-    <!-- <p>{{ summary }}</p> -->
+    {% if summary.strDescriptionEN %}
+    <p>{{ summary.strDescriptionEN }}</p>
+    {% endif %}<br>
+    {% if summary.strAlbumThumbBack %}
+    <img src="{{ summary.strAlbumThumbBack }}" alt="{{ album.title }}" class="artwork2">
+    {% endif %}<br><br>
 
     <form action="/albums/{{ currentAlbum.id }}?_method=PUT" method="POST">
+        <h3>Edit Album Details:</h3>
         <input type="text" class="albumInfo" name="id" value="{{ currentAlbum.id }}">
         <input type="text" name="title" value="{{ currentAlbum.title }}" placeholder="Album Title"><br>
         <input type="text" name="cover_medium" value="{{ currentAlbum.cover_medium }}" placeholder="Album Artwork Link"><br>
         <input type="text" name="cover_big" value="{{ currentAlbum.cover_big }}" placeholder="Album Artwork Link (Large)"><br>
-        <input type="text" name="genre_id" value="{{ currentAlbum.genre_id }}" placeholder="Album Genre(s)"><br>
+        <input type="text" class="albumInfo" name="genre_id" value="{{ currentAlbum.genre_id }}" placeholder="Album Genre(s)"><br>
         <input type="text" name="artistName" value="{{ currentAlbum.artistName }}" placeholder="Artist Name"><br>
-        <input type="text" name="summary" value="{{ summary }}" placeholder="Album Summary"><br><br>
+        <input type="text" name="intYearReleased" value="{{ summary.intYearReleased }}" placeholder="Year Released"><br>
+        <input type="text" class="albumInfo" name="strStyle" value="{{ summary.strStyle }}" placeholder="Album Style"><br>
+        <input type="text" name="strGenre" value="{{ summary.strGenre }}" placeholder="Album Genre"><br>
+        <input type="text" name="strLabel" value="{{ summary.strLabel }}" placeholder="Album Label"><br>
+        <input type="text" name="strMood" value="{{ summary.strMood }}" placeholder="Album Mood"><br>
+        <input type="text" name="strAlbumThumbBack" value="{{ summary.strAlbumThumbBack }}" placeholder="Back Album Artwork Link"><br>
+        <input type="text" name="strDescriptionEN" value="{{ summary.strDescriptionEN }}" placeholder="Album Summary"><br><br>
         <input type="submit" value="Submit Changes">
     </form><br><br>
 
     <form action="/albums/{{ currentAlbum.id }}?_method=DELETE" method="POST">
-        <button>Remove from My Favorites</button>
+        <button>Remove from My Favorites</button><br><br>
     </form>
 </div>
 {% endblock %}
