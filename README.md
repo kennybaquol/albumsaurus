@@ -5,12 +5,12 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 
 
 ## The User Story:
-As a user, I would like to
-• Create an account and login
-• Click on random albums that pop up to learn more about them
-• Save albums I like into a section for My Favorites
-• Edit info for albums in My Favorites
-• Delete albums from My Favorites
+As a user, I would like to: 
+- Create an account and login
+- Click on random albums that pop up to learn more about them
+- Save albums I like into a section for My Favorites
+- Edit info for albums in My Favorites
+- Delete albums from My Favorites
 
 ## The Wireframe:
 ![ERD](public/imgs/P2-Wireframe.png)
