@@ -6,7 +6,7 @@ Albumsaurus is full stack web app that allows users to discover and learn about 
 ## The User Story:
 
 
-## The Wireframe(s):
+## The Wireframe:
 ![ERD](public/imgs/P2-Wireframe.png)
 
 
