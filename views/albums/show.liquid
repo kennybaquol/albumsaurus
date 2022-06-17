@@ -7,7 +7,12 @@
 
     <img src="{{ album.cover_big }}" alt="{{ album.title }}" class="single"><br>
     <h2 name="title">{{ album.title }}</h2>
-    <h3>{{album.artist.name }}</h3><h4>{{ summary[0] }}</h4>
+    <h3>{{album.artist.name }}</h3>
+    <h4>{{ summary[0] }}</h4>
+    <h4>{{ summary[1] }}</h4>
+    <h4>{{ summary[2] }}</h4>
+    <h4>{{ summary[3] }}</h4>
+    <h4>{{ summary[4] }}</h4>
     {% if summary[5] %}
     <p>{{ summary[5] }}</p>
     {% endif %}<br>
