@@ -48,8 +48,8 @@ Once you've made an account, simply log in, find an album cover that looks inter
 - [x] Incorporate at least one API. List of examples here: (Public API List)[https://github.com/public-apis/public-apis].
 - [x] Have complete RESTful routes for at least one of your resources with GET, POST, PUT, and DELETE
 - [x] Utilize an ODM to create a database table structure and interact with your MongoDb-stored data
-- [] Include a readme file that explains how to use your app and contains a route table for your RESTful routes
-- [] Have semantically clean HTML, CSS, and back-end code
+- [x] Include a readme file that explains how to use your app and contains a route table for your RESTful routes
+- [x] Have semantically clean HTML, CSS, and back-end code
 - [x] Be deployed online and accessible to the public
 
 
