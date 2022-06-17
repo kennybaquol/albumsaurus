@@ -61,9 +61,8 @@ router.get("/", (req, res) => {
 
                         // For up to 50 times,
                         for (let i = 0; i < 50; i++) {
-                            // console.log('current number of albums: ' + selectedAlbums.length)
+                            // Choose an album at random, and
                             currentAlbumIndex = Math.floor(Math.random() * albumsData.length)
-                            // console.log('current release being tried: ' + albumsData[currentAlbumIndex].record_type + ', ' + albumsData[currentAlbumIndex].title)
 
                             // Add the current release to selectedAlbums if the release is type 'album'
                             // and hasn't already been selected
@@ -80,6 +79,7 @@ router.get("/", (req, res) => {
                             }
                         }
 
+                        // Render the index page with the selected random albums, as well as the user's favorite albums
                         let favoriteAlbums
                         User.findOne({ name: req.session.username }, (error, user) => {
                             if (error) {
@@ -89,7 +89,6 @@ router.get("/", (req, res) => {
                                 favoriteAlbums = user.favorites
                                 res.render('albums', {
                                     data: selectedAlbums,
-                                    // artistName,
                                     username: req.session.username,
                                     favorites: favoriteAlbums
                                 })
@@ -115,9 +114,8 @@ router.get('/new', (req, res) => {
 
 // Create route
 router.post('/', (req, res) => {
-    console.log('RAN CREATE POST ROUTE')
+    // Using a randomly-generated ID, create an Album with user-provided info
     const albumId = Math.floor(Math.random() * 9999999)
-
     Summary.create({
         intYearReleased: req.body.intYearReleased,
         strStyle: req.body.strStyle,
@@ -141,7 +139,7 @@ router.post('/', (req, res) => {
                 console.log(error)
             }
             else {
-                // console.log(album)
+                // Render the index page with the newly-generated album included in My Favorites
                 User.updateOne({ name: req.session.username },
                     {
                         $addToSet: {
@@ -163,18 +161,18 @@ router.post('/', (req, res) => {
             console.log(error)
         }
         else {
-        //     res.redirect('/albums')
+
         }
     })
 })
 
 // Show route
 router.get('/:id', (req, res) => {
+    // Display the current album's picture and details using an API fetch from 2 different API sources
     const id = req.params.id
     const deezerURL = `https://api.deezer.com/album/${id}`
     fetch(deezerURL)
         .then((apiResponse) => {
-            // console.log(apiResponse)
             return apiResponse.json()
         })
         .then((deezerAlbumData) => {
@@ -182,38 +180,27 @@ router.get('/:id', (req, res) => {
             const key = process.env.LAST_FM_API_KEY
             let artistName = albumData.artist.name
             let artistId
-
-            // artistName = 'outkast'
-
             const title = albumData.title
-            // const requestURL2 = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${key}&artist=${artist}&album=${title}&format=json`
             const artistData = `https://www.theaudiodb.com/api/v1/json/2/search.php?s=${artistName}`
             fetch(artistData)
                 .then((apiResponse) => {
                     return apiResponse.json()
                 })
                 .then((artistData) => {
+                    // If the Deezer API-selected artist exists on the AudioDB API,
                     if (artistData.artists) {
-
-
                         artistId = artistData.artists[0].idArtist
                         console.log(artistId)
-
                         const dbData = `https://theaudiodb.com/api/v1/json/2/album.php?i=${artistId}`
-
-
                         let summary = []
-
                         fetch(dbData)
                             .then((apiResponse) => {
-                                // console.log(apiResponse)
                                 return apiResponse.json()
                             })
                             .then((dbData) => {
-
+                                // find the current album by album title (by parsing through their discography)
                                 for (let i = 0; i < dbData.album.length; i++) {
                                     if (dbData.album[i].strAlbum === deezerAlbumData.title) {
-                                        // console.log('Description that SHOULD be inputted: ' + dbData.album[i].strDescriptionEN)
                                         description = dbData.album[i].strDescriptionEN
                                         summary.push(dbData.album[i].intYearReleased)
                                         summary.push(dbData.album[i].strStyle)
@@ -228,7 +215,7 @@ router.get('/:id', (req, res) => {
 
                             })
                             .then((dbData) => {
-                                console.log('SUMMARY: ' + summary)
+                                // Render the current album's picture and info on the show page
                                 res.render('albums/show', {
                                     album: albumData,
                                     summary
@@ -243,6 +230,7 @@ router.get('/:id', (req, res) => {
                                 res.json({ error })
                             })
                     }
+                    // If the album doesn't exist on the AudioDB API, redirect to the index page to start the process over
                     else {
                         res.redirect('/albums')
                     }
@@ -260,7 +248,6 @@ router.get('/:id', (req, res) => {
 
 // Edit route
 router.get('/:id/edit', (req, res) => {
-    console.log('RAN EDIT ROUTE')
     const albumId = req.params.id
     User.findOne({ name: req.session.username }, (error, user) => {
         if (error) {
@@ -271,12 +258,10 @@ router.get('/:id/edit', (req, res) => {
             for (let i = 0; i < user.favorites.length; i++) {
                 if (user.favorites[i].id == albumId) {
                     currentAlbum = user.favorites[i]
-                    // console.log('CURRENT ALBUM: ' + currentAlbum.summaries[0])
-                    // console.log(currentAlbum.summaries[0])
                     break
                 }
             }
-            // console.log(currentAlbum)
+            // Render the "My Favorites" version of the show page
             res.render(`albums/edit`, {
                 currentAlbum,
                 summary: currentAlbum.summaries[0]
@@ -287,6 +272,8 @@ router.get('/:id/edit', (req, res) => {
 
 // Favorite route
 router.post('/:id/favorite', (req, res) => {
+    // After the "Submit Changes" button has been pressed,
+    // update the "My Favorites" version of the album's info
     Summary.create({
         intYearReleased: req.body.intYearReleased,
         strStyle: req.body.strStyle,
@@ -324,6 +311,7 @@ router.post('/:id/favorite', (req, res) => {
                             if (error) {
                                 console.log(error)
                             }
+                            // Redirect to the index page, displaying the newly-added album under the user's favorites
                             else {
                                 res.redirect('/albums')
                             }
@@ -340,7 +328,6 @@ router.post('/:id/favorite', (req, res) => {
 router.put('/:id', (req, res) => {
     const albumId = req.params.id
     console.log('RAN UPDATE PUT ROUTE')
-
     Summary.create({
         intYearReleased: req.body.intYearReleased,
         strStyle: req.body.strStyle,
@@ -375,7 +362,6 @@ router.put('/:id', (req, res) => {
                         console.log(error)
                     }
                     else {
-                        console.log("UPDATED UPDATED UPDATED")
                         res.redirect(`/albums/${albumId}/edit`)
                     }
                 }

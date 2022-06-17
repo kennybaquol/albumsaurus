@@ -18,7 +18,7 @@ const summariesSchema = new Schema({
   strAlbumThumbBack: String,
   strDescriptionEN: String,
   strMood: String
-});
+})
 
 // make album model
 const Summary = model("Summary", summariesSchema)

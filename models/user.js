@@ -24,7 +24,6 @@ const summariesSchema = new Schema({
 
 // Make albumsSchema
 const albumsSchema = new Schema({
-  // _id: ObjectId,
   id: Number,
   title: String,
   cover_medium: String,
@@ -33,13 +32,7 @@ const albumsSchema = new Schema({
   artistID: Number,
   artistName: String,
   summaries: [{ type: summariesSchema }]
-
-  // mbid: String,
-  // releaseDate: Date,
-  // listeners: Number,
-  // playCount: Number,
-
-});
+})
 
 // make user schema
 const userSchema = new Schema({

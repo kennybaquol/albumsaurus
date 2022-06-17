@@ -57,6 +57,7 @@ Once you've made an account, simply log in, find an album cover that looks inter
 - [x] User creation and authorization
 - [] Delete summaries and albums once they've been altered or removed from My Favorites
 - [] Fix async/await bug that doesn't copy the entire description from the AudioDB API
+- [] Refactor some bulky code from the albums controller into functions on app.js
 - [] Add styling rules so that all medium and big artwork pictures are the same size throughout the different routes
 - [] Give users the ability to search through their favorite albums for quicker future reference
 - [] Replace Last FM API with an API that has wiki summaries and additional interesting data on a higher percentage of albums (examples below)
