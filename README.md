@@ -1,8 +1,7 @@
 # Albumsaurus
 
 ## Premise: 
-Albumsaurus is full stack web app that allows users to discover and learn about different albums in a Netlifx-style UI. By clicking on an album's artwork or title on screen, the SHOW page will display to the user that album's release date, genre, personnel, (and ideally some billboard chart info, i.e. top spot)
-
+Albumsaurus is full stack web app that allows users to discover and learn about different albums from hundreds of artists from different genres. By clicking on an album's artwork or title on screen, the SHOW page will display to the user that album's artwork photo(s), genre/style, and more info. Users can save the albums they like, where they can view and edit their info under "My Favorites".
 
 ## The User Story:
 As a user, I would like to: 
@@ -58,6 +57,7 @@ Once you've made an account, simply log in, find an album cover that looks inter
 - [] Delete summaries and albums once they've been altered or removed from My Favorites
 - [] Fix async/await bug that doesn't copy the entire description from the AudioDB API
 - [] Fix bug where routes write to the first user when multiple users start with the same characters
+- [] Fix bug where sometimes a selected artist doesn't have any releases classified as "albums"
 - [] Refactor some bulky code from the albums controller into functions on app.js
 - [] Add styling rules so that all medium and big artwork pictures are the same size throughout the different routes
 - [] Give users the ability to search through their favorite albums for quicker future reference
