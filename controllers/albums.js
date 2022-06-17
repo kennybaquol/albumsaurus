@@ -171,49 +171,56 @@ router.get('/:id', (req, res) => {
                     return apiResponse.json()
                 })
                 .then((artistData) => {
-                    artistId = artistData.artists[0].idArtist
-                    console.log(artistId)
+                    if (artistData.artists) {
 
-                    const dbData = `https://theaudiodb.com/api/v1/json/2/album.php?i=${artistId}`
 
-                    fetch(dbData)
-                        .then((apiResponse) => {
-                            // console.log(apiResponse)
-                            return apiResponse.json()
-                        })
-                        .then((dbData) => {
-                            let summary = []
+                        artistId = artistData.artists[0].idArtist
+                        console.log(artistId)
 
-                            for (let i = 0; i < dbData.album.length; i++) {
-                                if (dbData.album[i].strAlbum === deezerAlbumData.title) {
-                                    console.log(dbData.album[i].strDescriptionEN)
+                        const dbData = `https://theaudiodb.com/api/v1/json/2/album.php?i=${artistId}`
 
-                                    summary.push(dbData.album[i].intYearReleased)
-                                    summary.push(dbData.album[i].strStyle)
-                                    summary.push(dbData.album[i].strGenre)
-                                    summary.push(dbData.album[i].strLabel)
-                                    summary.push(dbData.album[i].strAlbumThumbBack)
-                                    summary.push(dbData.album[i].strDescriptionEN)
-                                    summary.push(dbData.album[i].strMood)
-                                    break
-                                }
-                            }
-
-                            // try {
-                            //     summary = dbData.album.wiki.summary
-                            // }
-                            // catch (error) {
-                            // }
-
-                            res.render('albums/show', {
-                                album: albumData,
-                                summary
+                        fetch(dbData)
+                            .then((apiResponse) => {
+                                // console.log(apiResponse)
+                                return apiResponse.json()
                             })
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                            res.json({ error })
-                        })
+                            .then((dbData) => {
+                                let summary = []
+
+                                for (let i = 0; i < dbData.album.length; i++) {
+                                    if (dbData.album[i].strAlbum === deezerAlbumData.title) {
+                                        console.log(dbData.album[i].strDescriptionEN)
+
+                                        summary.push(dbData.album[i].intYearReleased)
+                                        summary.push(dbData.album[i].strStyle)
+                                        summary.push(dbData.album[i].strGenre)
+                                        summary.push(dbData.album[i].strLabel)
+                                        summary.push(dbData.album[i].strAlbumThumbBack)
+                                        summary.push(dbData.album[i].strDescriptionEN)
+                                        summary.push(dbData.album[i].strMood)
+                                        break
+                                    }
+                                }
+
+                                // try {
+                                //     summary = dbData.album.wiki.summary
+                                // }
+                                // catch (error) {
+                                // }
+
+                                res.render('albums/show', {
+                                    album: albumData,
+                                    summary
+                                })
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                res.json({ error })
+                            })
+                    }
+                    else {
+                        res.redirect('/albums')
+                    }
                 })
                 .catch((error) => {
                     console.log(error)

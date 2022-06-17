@@ -1,10 +1,10 @@
 {% layout "layout.liquid" %} {% block content %}
-<div>
+<div class="single2">
     <a href="/albums">
         <button>Back to Albums</button>
     </a>
     <h2>{{ currentAlbum.title }}</h2>
-    <img src="{{ currentAlbum.cover_big }}" alt="{{ currentAlbum.title }}"><br>
+    <img src="{{ currentAlbum.cover_big }}" alt="{{ currentAlbum.title }}" class="single"><br>
 
     {% assign summary = " " %}
     {% if currentAlbum.summary %}
