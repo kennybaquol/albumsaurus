@@ -1,7 +1,7 @@
 # Albumsaurus
 
 ## Premise: 
-Albumsaurus is full stack web app that allows users to discover and learn about different albums from hundreds of artists from different genres. By clicking on an album's artwork or title on screen, the SHOW page will display to the user that album's artwork photo(s), genre/style, and more info. Users can save the albums they like, where they can view and edit their info under "My Favorites".
+Albumsaurus is a full stack web app that allows users to discover and learn about different albums from hundreds of artists from different genres. By clicking on an album's artwork or title on screen, the SHOW page will display to the user that album's artwork photo(s), genre/style, and more info. Users can save the albums they like, where they can view and edit their info under "My Favorites".
 
 ## The User Story:
 As a user, I would like to: 
